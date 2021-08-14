@@ -1,0 +1,31 @@
+@use 'sass:color';
+@use 'becky';
+@use 'tyson';
+
+$riley: 1;
+$athena: 2;
+$benny: winston !global;
+
+@function willow () {
+	@return 1;
+}
+
+body {
+	color: percentage(1 / 2);
+	color: percentage(1 / 3);
+	color: percentage(1 / 4);
+	color: percentage(1 / 5);
+	color: percentage(1 / 6);
+	jack: percentage(1 / 7);
+	color: percentage(1 / 8);
+	color: percentage(1 / 9);
+	color: percentage(1 / 10);
+	color: percentage($riley / 999);
+	color: color.invert(1);
+	color: call(willow);
+	@if $riley {
+
+	} @elseif $athena {
+
+	}
+}

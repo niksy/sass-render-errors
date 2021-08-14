@@ -1,0 +1,93 @@
+{
+  "name": "sass-render-errors",
+  "version": "0.0.0",
+  "description": "Get Sass render errors and deprecations.",
+  "license": "MIT",
+  "author": "Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com)",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "cjs/",
+    "esm/",
+    "CHANGELOG.md",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "release": "np --no-release-draft",
+    "version": "if [ $(git rev-parse --abbrev-ref HEAD) == 'master' ]; then version-changelog CHANGELOG.md && changelog-verify CHANGELOG.md && git add CHANGELOG.md; else echo; fi",
+    "postpublish": "GITHUB_TOKEN=$GITHUB_RELEASE_TOKEN github-release-from-changelog",
+    "lint": "eslint '{index,lib/**/*,test/**/*}.js'",
+    "test": "([ -z $WATCH_TEST ] && npm run lint || echo) && BABEL_ENV=test nyc mocha --require @babel/register --require esm 'test/**/*.js' && nyc check-coverage",
+    "test:watch": "WATCH_TEST=1 nodemon --exec npm test",
+    "build": "rollup --config rollup.config.js",
+    "module-check": "node -e 'require(\"sass-render-errors\");' && node --input-type=module -e 'import \"sass-render-errors\";'",
+    "prepublishOnly": "npm run build && npm run module-check"
+  },
+  "dependencies": {
+    "hook-std": "^2.0.0",
+    "string-match-all": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/register": "^7.0.0",
+    "@rollup/plugin-babel": "^5.2.1",
+    "babel-plugin-istanbul": "^6.0.0",
+    "changelog-verify": "^1.1.2",
+    "core-js": "^2.6.5",
+    "eslint": "^7.31.0",
+    "eslint-config-niksy": "^10.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsdoc": "^33.3.0",
+    "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-unicorn": "^31.0.0",
+    "esm": "^3.0.51",
+    "github-release-from-changelog": "^2.1.1",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.2",
+    "mocha": "^8.2.0",
+    "nodemon": "^2.0.6",
+    "np": "^6.5.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.1.2",
+    "rollup": "^2.32.1",
+    "sass": "^1.38.1",
+    "version-changelog": "^3.1.1"
+  },
+  "peerDependencies": {
+    "sass": ">=1"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "keywords": [
+    "sass",
+    "render",
+    "errors"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/niksy/sass-render-errors.git"
+  },
+  "bugs": {
+    "url": "https://github.com/niksy/sass-render-errors/issues"
+  },
+  "homepage": "https://github.com/niksy/sass-render-errors#readme"
+}
