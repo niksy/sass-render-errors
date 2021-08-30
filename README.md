@@ -21,7 +21,8 @@ import sassRenderErrors from 'sass-render-errors';
 import sass from 'sass';
 
 (async () => {
-	const result = await sassRenderErrors(sass, { file: './index.scss' });
+	const renderer = sassRenderErrors(sass);
+	const result = await renderer.render({ file: './index.scss' });
 	console.log(result);
 	/*[
 		{
@@ -56,27 +57,12 @@ import sass from 'sass';
 
 ## API
 
-### sassRenderErrors(sass, [options])
+### sassRenderErrors(sass)
 
-Returns: `Promise<object[]>`
-
-Promise with array of errors and deprecations.
-
-If file contains multiple errors, only first one is shown. All deprecations are
-always visible.
-
-Each array entry is object which contains following properties:
-
-| Property              | Type     | Description                                   |
-| --------------------- | -------- | --------------------------------------------- |
-| `file`                | `string` | Full path to file with error or deprecation.  |
-| `message`             | `string` | Error or deprecation message.                 |
-| `source.start.column` | `number` | Pattern start column.                         |
-| `source.start.line`   | `number` | Pattern start line.                           |
-| `source.end.column`   | `number` | Pattern end column.                           |
-| `source.end.line`     | `number` | Pattern end line.                             |
-| `source.pattern`      | `string` | Error or deprecation code or pattern of code. |
-| `type`                | `string` | Can be either `error` or `deprecation`.       |
+Creates [Sass renderer](#renderer) with methods `render` and `renderSync`. Both
+methods return `Promise`, but internally use original Sass rendering methods.
+This way you can
+[leverage faster rendering without using Fibers](https://github.com/sass/dart-sass#javascript-api).
 
 #### sass
 
@@ -86,13 +72,35 @@ Sass is injected as dependancy because each version has different set of errors
 and deprecations and you should get results for Sass version your application
 uses.
 
+### renderer\[render|renderSync\]([options])<a name="renderer" />
+
+Returns: `Promise<SassRenderError[]>`
+
+Promise with array of errors and deprecations.
+
+If input contains multiple errors, only first one is shown. All deprecations are
+always visible.
+
+Each array entry is object which contains following properties:
+
+| Property              | Type     | Description                                             |
+| --------------------- | -------- | ------------------------------------------------------- |
+| `file`                | `string` | Full path to file or `stdin` with error or deprecation. |
+| `message`             | `string` | Error or deprecation message.                           |
+| `source.start.column` | `number` | Pattern start column.                                   |
+| `source.start.line`   | `number` | Pattern start line.                                     |
+| `source.end.column`   | `number` | Pattern end column.                                     |
+| `source.end.line`     | `number` | Pattern end line.                                       |
+| `source.pattern`      | `string` | Error or deprecation code or pattern of code.           |
+| `type`                | `string` | Can be either `error` or `deprecation`.                 |
+
 #### options
 
 Type: `object`
 
 [Sass options](https://github.com/sass/dart-sass#javascript-api). For detailed
-explanation see
-[node-sass options reference](https://github.com/sass/node-sass#options).
+explanation see [node-sass options
+reference](https://github.com/sass/node-sass#options).
 
 ## License
 

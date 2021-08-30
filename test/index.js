@@ -3,6 +3,13 @@ import assert from 'assert';
 import sass from 'sass';
 import function_ from '../index';
 
+/**
+ * @typedef {import('../index').SassRenderError} SassRenderError
+ */
+
+/**
+ * @param {SassRenderError[]} expected
+ */
 function resolveExpectedResults(expected) {
 	return expected.map((entry) => {
 		if (entry.file === 'stdin') {
@@ -16,9 +23,15 @@ function resolveExpectedResults(expected) {
 }
 
 it('should handle errors', async function () {
-	const actual = await function_(sass, {
-		file: './test/fixtures/errors.scss'
-	});
+	const renderer = function_(sass);
+	const [actualAsync, actualSync] = await Promise.all([
+		renderer.render({
+			file: './test/fixtures/errors.scss'
+		}),
+		renderer.renderSync({
+			file: './test/fixtures/errors.scss'
+		})
+	]);
 	const expected = resolveExpectedResults([
 		{
 			file: 'test/fixtures/errors.scss',
@@ -37,13 +50,20 @@ it('should handle errors', async function () {
 			type: 'error'
 		}
 	]);
-	assert.deepEqual(actual, expected);
+	assert.deepEqual(actualAsync, expected);
+	assert.deepEqual(actualSync, expected);
 });
 
 it('should handle partials', async function () {
-	const actual = await function_(sass, {
-		file: './test/fixtures/_becky.scss'
-	});
+	const renderer = function_(sass);
+	const [actualAsync, actualSync] = await Promise.all([
+		renderer.render({
+			file: './test/fixtures/_becky.scss'
+		}),
+		renderer.renderSync({
+			file: './test/fixtures/_becky.scss'
+		})
+	]);
 	const expected = resolveExpectedResults([
 		{
 			file: 'test/fixtures/_becky.scss',
@@ -63,13 +83,15 @@ it('should handle partials', async function () {
 			type: 'deprecation'
 		}
 	]);
-	assert.deepEqual(actual, expected);
+	assert.deepEqual(actualAsync, expected);
+	assert.deepEqual(actualSync, expected);
 });
 
 it('should handle errors from data string', async function () {
 	const testCases = [
 		{
 			input: { data: '@use "rocky";' },
+			/** @type {SassRenderError[]} */
 			output: [
 				{
 					file: 'stdin',
@@ -91,6 +113,7 @@ it('should handle errors from data string', async function () {
 		},
 		{
 			input: { data: 'body {color: color.invert(1);}' },
+			/** @type {SassRenderError[]} */
 			output: [
 				{
 					file: 'stdin',
@@ -114,18 +137,30 @@ it('should handle errors from data string', async function () {
 
 	await Promise.all(
 		testCases.map(async (testCase) => {
-			const actual = await function_(sass, testCase.input);
+			const renderer = function_(sass);
+			const [actualAsync, actualSync] = await Promise.all([
+				renderer.render(testCase.input),
+				renderer.renderSync(testCase.input)
+			]);
 			const expected = resolveExpectedResults(testCase.output);
-			assert.deepEqual(actual, expected);
+			assert.deepEqual(actualAsync, expected);
+			assert.deepEqual(actualSync, expected);
 		})
 	);
 });
 
 it('should handle deprecations', async function () {
-	const actual = await function_(sass, {
-		file: './test/fixtures/deprecations.scss',
-		includePaths: ['./test/fixtures/phoebe']
-	});
+	const renderer = function_(sass);
+	const [actualAsync, actualSync] = await Promise.all([
+		renderer.render({
+			file: './test/fixtures/deprecations.scss',
+			includePaths: ['./test/fixtures/phoebe']
+		}),
+		renderer.renderSync({
+			file: './test/fixtures/deprecations.scss',
+			includePaths: ['./test/fixtures/phoebe']
+		})
+	]);
 	const expected = resolveExpectedResults([
 		{
 			file: 'test/fixtures/_becky.scss',
@@ -304,5 +339,6 @@ it('should handle deprecations', async function () {
 			type: 'deprecation'
 		}
 	]);
-	assert.deepEqual(actual, expected);
+	assert.deepEqual(actualAsync, expected);
+	assert.deepEqual(actualSync, expected);
 });

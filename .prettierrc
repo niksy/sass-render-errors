@@ -16,5 +16,14 @@
 	"htmlWhitespaceSensitivity": "css",
 	"vueIndentScriptAndStyle": false,
 	"endOfLine": "lf",
-	"embeddedLanguageFormatting": "auto"
+	"embeddedLanguageFormatting": "auto",
+	"overrides": [
+		{
+			"files": "package.json",
+			"options": {
+				"useTabs": false,
+				"tabWidth": 2
+			}
+		}
+	]
 }

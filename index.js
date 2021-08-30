@@ -1,3 +1,34 @@
+/* globals RegExpMatchArray */
+
+/**
+ * @typedef {import('sass')} Sass
+ * @typedef {import('sass').SassException} SassException
+ * @typedef {import('sass').Result} SassResult
+ * @typedef {import('./types').Options} SassOptions
+ */
+
+/**
+ * @typedef {object} SassRenderError Sass render error or deprecation.
+ * @property {string}                     file                Full path to file or `stdin` with error or deprecation.
+ * @property {string}                     message             Error or deprecation message.
+ * @property {object}                     source              Error or deprecation pattern source.
+ * @property {object}                     source.start        Pattern start.
+ * @property {number}                     source.start.column Pattern start column.
+ * @property {number}                     source.start.line   Pattern start line.
+ * @property {object}                     source.end          Pattern end.
+ * @property {number}                     source.end.column   Pattern end column.
+ * @property {number}                     source.end.line     Pattern end line.
+ * @property {string}                     source.pattern      Error or deprecation code or pattern of code.
+ * @property {'error'|'deprecation'|null} type                Error or deprecation code or pattern of code.
+ */
+
+/**
+ * @callback SassRenderer
+ * @param   {SassOptions}         options
+ * @returns {Promise<SassResult>}
+ * @throws {Promise<SassException>}
+ */
+
 import { promisify } from 'util';
 import path from 'path';
 import hookStd from 'hook-std';
@@ -12,6 +43,10 @@ const wordLike = /\w/;
 const dotAtEnd = /\.$/;
 const startsWithLowercase = /^[a-z]/;
 
+/**
+ * @param {string} codeLine
+ * @param {string} codePositionMarker
+ */
 function extractInformationWithPositionMarker(codeLine, codePositionMarker) {
 	const firstIndex = codePositionMarker.indexOf('^');
 	const code = codeLine.slice(firstIndex, codePositionMarker.length);
@@ -22,8 +57,14 @@ function extractInformationWithPositionMarker(codeLine, codePositionMarker) {
 	};
 }
 
+/**
+ * @param {string} input
+ */
 function parseStringOutput(input) {
-	const results = []
+	/** @type {RegExpMatchArray[]} */
+	const matches = [];
+
+	const results = matches
 		.concat(
 			...outputRegexes.map((outputRegex) => [
 				...(matchAll(input, outputRegex) ?? [])
@@ -35,9 +76,9 @@ function parseStringOutput(input) {
 				codeLine = '',
 				codePositionMarker = '',
 				file = '',
-				line = '0',
-				column = '0'
-			} = result.groups;
+				line = '1',
+				column = '1'
+			} = result.groups ?? {};
 
 			const composedLine = Number(line);
 			const composedColumn = Number(column);
@@ -62,7 +103,9 @@ function parseStringOutput(input) {
 				codePositionMarker
 			);
 
-			return {
+			/** @type {SassRenderError} */
+			const composedResult = {
+				type: null,
 				file: file,
 				source: {
 					start: {
@@ -77,12 +120,20 @@ function parseStringOutput(input) {
 				},
 				message: composedMessage
 			};
+
+			return composedResult;
 		});
 
 	return results;
 }
 
+/**
+ * @param {SassException} input
+ * @param {string}        file
+ * @param {string}        cwd
+ */
 function parseErrorOutput(input, file, cwd) {
+	/** @type {SassRenderError[]} */
 	const errors = [];
 	const results = parseStringOutput(input.formatted);
 
@@ -100,7 +151,12 @@ function parseErrorOutput(input, file, cwd) {
 	};
 }
 
+/**
+ * @param {string} input
+ * @param {string} cwd
+ */
 function parseConsoleOutput(input, cwd) {
+	/** @type {SassRenderError[]} */
 	const deprecations = [];
 	const results = parseStringOutput(input);
 
@@ -120,9 +176,15 @@ function parseConsoleOutput(input, cwd) {
 	};
 }
 
-export default async function (sass, options = {}) {
-	const consoleOutput = [];
+/**
+ * @param {SassRenderer} renderer
+ * @param {SassOptions}  options  Sass options.
+ */
+async function getRenderResults(renderer, options) {
+	const consoleOutput = [''];
+	/** @type {SassRenderError[]} */
 	const errors = [];
+	/** @type {SassRenderError[]} */
 	const deprecations = [];
 	const cwd = process.cwd();
 
@@ -131,10 +193,12 @@ export default async function (sass, options = {}) {
 	});
 
 	try {
-		await promisify(sass.render)({
+		/** @type {SassOptions} */
+		const renderOptions = {
 			...options,
 			verbose: true
-		});
+		};
+		await renderer(renderOptions);
 
 		const { deprecations: deprecationsFromConsole } = parseConsoleOutput(
 			consoleOutput.join(''),
@@ -143,7 +207,9 @@ export default async function (sass, options = {}) {
 		deprecationsFromConsole.forEach((deprecation) => {
 			deprecations.push(deprecation);
 		});
-	} catch (error) {
+	} catch (/** @type {any} */ error_) {
+		/** @type {SassException} */
+		const error = error_;
 		const { errors: errorsFromOutput } = parseErrorOutput(
 			error,
 			error.file,
@@ -163,4 +229,46 @@ export default async function (sass, options = {}) {
 	}
 
 	return [...errors, ...deprecations];
+}
+
+/**
+ * Create Sass error renderer.
+ *
+ * @param {Sass} sass Sass module reference. _Only Dart Sass is supported._.
+ */
+export default function (sass) {
+	/** @type {SassRenderer} */
+	const asyncRenderer = promisify(sass.render);
+
+	/** @type {SassRenderer} */
+	const syncRenderer = (options) => {
+		return new Promise((resolve, reject) => {
+			try {
+				const result = sass.renderSync(options);
+				resolve(result);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	};
+
+	return {
+		/**
+		 * Returns `Promise` with array of errors and deprecations. If input contains multiple errors, only first one is shown. All deprecations are always visible.
+		 *
+		 * Uses `sass.render` for rendering.
+		 *
+		 * @param {SassOptions} options Sass options.
+		 */
+		render: getRenderResults.bind(null, asyncRenderer),
+
+		/**
+		 * Returns `Promise` with array of errors and deprecations. If input contains multiple errors, only first one is shown. All deprecations are always visible.
+		 *
+		 * Uses `sass.renderSync` for rendering.
+		 *
+		 * @param {SassOptions} options Sass options.
+		 */
+		renderSync: getRenderResults.bind(null, syncRenderer)
+	};
 }
