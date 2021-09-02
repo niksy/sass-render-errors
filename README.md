@@ -8,6 +8,17 @@ Currently there’s no Sass API which reports errors and deprecations in machine
 readable format (e.g. JSON-like data). This module parses Sass render output and
 provides render information for easier usage in linters and similar tools.
 
+## Undefined functions
+
+Sass currently doesn’t check for undefined
+[functions](https://sass-lang.com/documentation/at-rules/function). This module
+has additional renderer which tries to guess which functions are undefined by
+comparing
+[list of known CSS functions](https://github.com/niksy/css-functions-list) with
+functions defined in file.
+
+This renderer is available as named export `undefinedFunctions`.
+
 ## Install
 
 ```sh
@@ -17,11 +28,11 @@ npm install sass-render-errors --save
 ## Usage
 
 ```js
-import sassRenderErrors from 'sass-render-errors';
+import createRenderer from 'sass-render-errors';
 import sass from 'sass';
 
 (async () => {
-	const renderer = sassRenderErrors(sass);
+	const renderer = createRenderer(sass);
 	const result = await renderer.render({ file: './index.scss' });
 	console.log(result);
 	/*[
@@ -78,8 +89,10 @@ Returns: `Promise<SassRenderError[]>`
 
 Promise with array of errors and deprecations.
 
-If input contains multiple errors, only first one is shown. All deprecations are
-always visible.
+If input contains multiple errors, only first one is shown. If you’re using
+undefined function renderer, all errors are always visible.
+
+All deprecations are always visible.
 
 Each array entry is object which contains following properties:
 

@@ -40,7 +40,12 @@
   },
   "dependencies": {
     "@types/sass": "^1.16.1",
+    "css-functions-list": "file:../css-functions-list",
     "hook-std": "^2.0.0",
+    "nanoid": "^3.1.25",
+    "postcss": "^8.3.6",
+    "postcss-scss": "^4.0.0",
+    "postcss-value-parser": "^4.1.0",
     "string-match-all": "^1.0.0"
   },
   "devDependencies": {

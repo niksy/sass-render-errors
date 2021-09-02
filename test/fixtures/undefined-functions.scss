@@ -1,0 +1,11 @@
+@use 'sass:color';
+
+@function minnie($color) {
+	@return $color;
+}
+
+body {
+	width: calc(100 + 1px);
+	color: becky(#f00);
+	font-family: minnie(1);
+}
