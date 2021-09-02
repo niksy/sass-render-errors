@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Handle noop plugin for PostCSS 7
+
 ## [1.1.0][] - 2021-09-02
 
 ### Added
