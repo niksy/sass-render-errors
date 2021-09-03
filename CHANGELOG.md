@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.1.2][] - 2021-09-03
+
 ### Fixed
 
 -   Incorrect parsing of namespaced functions
@@ -30,3 +32,5 @@
 [1.1.0]: https://github.com/niksy/sass-render-errors/tree/v1.1.0
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.1.1...HEAD
 [1.1.1]: https://github.com/niksy/sass-render-errors/tree/v1.1.1
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/niksy/sass-render-errors/tree/v1.1.2
