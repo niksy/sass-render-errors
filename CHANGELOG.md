@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Improve regular expression for deprecations
+
 ## [1.1.3][] - 2021-09-03
 
 ### Added
