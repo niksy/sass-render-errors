@@ -373,6 +373,22 @@ describe('Undefined functions', function () {
 					}
 				},
 				type: 'error'
+			},
+			{
+				file: 'test/fixtures/undefined-functions.scss',
+				message: 'Undefined function.',
+				source: {
+					end: {
+						column: 17,
+						line: 13
+					},
+					pattern: 'harley',
+					start: {
+						column: 11,
+						line: 13
+					}
+				},
+				type: 'error'
 			}
 		]);
 		assert.deepEqual(actualAsync, expected);

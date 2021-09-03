@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Added
+
+-   Support for checking inside `@if` at-rules
+
 ## [1.1.2][] - 2021-09-03
 
 ### Fixed
