@@ -5,6 +5,7 @@
 ### Changed
 
 -   Improve regular expression for deprecations
+-   Properly return `stdin` as file
 
 ## [1.1.3][] - 2021-09-03
 
