@@ -8,4 +8,5 @@ body {
 	width: calc(100 + 1px);
 	color: becky(#f00);
 	font-family: minnie(1);
+	background-color: color.invert(#f00);
 }

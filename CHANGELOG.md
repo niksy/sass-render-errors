@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Incorrect parsing of namespaced functions
+
 ## [1.1.1][] - 2021-09-02
 
 ### Fixed
