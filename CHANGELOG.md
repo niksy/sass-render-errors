@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.1.3][] - 2021-09-03
+
 ### Added
 
 -   Support for checking inside `@if` at-rules
@@ -38,3 +40,5 @@
 [1.1.1]: https://github.com/niksy/sass-render-errors/tree/v1.1.1
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.1.2...HEAD
 [1.1.2]: https://github.com/niksy/sass-render-errors/tree/v1.1.2
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.1.3...HEAD
+[1.1.3]: https://github.com/niksy/sass-render-errors/tree/v1.1.3
