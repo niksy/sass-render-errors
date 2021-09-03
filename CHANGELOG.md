@@ -7,6 +7,10 @@
 -   Improve regular expression for deprecations
 -   Properly return `stdin` as file
 
+### Fixed
+
+-   JSON encode input values
+
 ## [1.1.3][] - 2021-09-03
 
 ### Added
