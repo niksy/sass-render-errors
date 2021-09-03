@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.2.0][] - 2021-09-03
+
 ### Changed
 
 -   Improve regular expression for deprecations
@@ -51,3 +53,5 @@
 [1.1.2]: https://github.com/niksy/sass-render-errors/tree/v1.1.2
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.1.3...HEAD
 [1.1.3]: https://github.com/niksy/sass-render-errors/tree/v1.1.3
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/niksy/sass-render-errors/tree/v1.2.0
