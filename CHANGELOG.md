@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Added
+
+-   Support for stack trace
+
 ## [1.4.3][] - 2021-09-06
 
 ### Changed

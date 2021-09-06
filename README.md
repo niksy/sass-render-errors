@@ -35,24 +35,27 @@ import sass from 'sass';
 	const renderer = createRenderer(sass);
 	const result = await renderer.render({ file: './index.scss' });
 	console.log(result);
-	/*[
+	/* [
 		{
-			file: '<full path>/index.scss',
+			type: 'deprecation',
+			file: '<absolute path>/index.scss',
 			message: 'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).',
+			stack: [
+				'at root stylesheet (<absolute path>/index.scss:4:24)'
+			],
 			source: {
+				start: {
+					column: 9,
+					line: 4
+				},
 				end: {
 					column: 24,
 					line: 4
 				},
-				pattern: 'color.invert(1)',
-				start: {
-					column: 9,
-					line: 4
-				}
-			},
-			type: 'deprecation'
+				pattern: 'color.invert(1)'
+			}
 		}
-	]*/
+	] */
 })();
 ```
 
@@ -96,16 +99,17 @@ All deprecations are always visible.
 
 Each array entry is object which contains following properties:
 
-| Property              | Type     | Description                                             |
-| --------------------- | -------- | ------------------------------------------------------- |
-| `file`                | `string` | Full path to file or `stdin` with error or deprecation. |
-| `message`             | `string` | Error or deprecation message.                           |
-| `source.start.column` | `number` | Pattern start column.                                   |
-| `source.start.line`   | `number` | Pattern start line.                                     |
-| `source.end.column`   | `number` | Pattern end column.                                     |
-| `source.end.line`     | `number` | Pattern end line.                                       |
-| `source.pattern`      | `string` | Error or deprecation code or pattern of code.           |
-| `type`                | `string` | Can be either `error` or `deprecation`.                 |
+| Property              | Type       | Description                                                 |
+| --------------------- | ---------- | ----------------------------------------------------------- |
+| `file`                | `string`   | Absolute path to file or `stdin` with error or deprecation. |
+| `message`             | `string`   | Error or deprecation message.                               |
+| `stack`               | `string[]` | Stack trace of error or deprecation.                        |
+| `source.start.column` | `number`   | Pattern start column.                                       |
+| `source.start.line`   | `number`   | Pattern start line.                                         |
+| `source.end.column`   | `number`   | Pattern end column.                                         |
+| `source.end.line`     | `number`   | Pattern end line.                                           |
+| `source.pattern`      | `string`   | Error or deprecation code or pattern of code.               |
+| `type`                | `string`   | Can be either `error` or `deprecation`.                     |
 
 #### options
 

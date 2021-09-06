@@ -36,6 +36,10 @@ export type SassRenderError = {
      */
     message: string;
     /**
+     * Stack trace of error or deprecation.
+     */
+    stack: string[];
+    /**
      * Error or deprecation pattern source.
      */
     source: {

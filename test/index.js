@@ -17,7 +17,13 @@ function resolveExpectedResults(expected) {
 		}
 		return {
 			...entry,
-			file: path.resolve(__dirname, '..', entry.file)
+			file: path.resolve(__dirname, '..', entry.file),
+			stack: entry.stack.map((string) =>
+				string.replace(
+					/\((.+?):/,
+					(match, file) => `(${path.resolve(__dirname, '..', file)}:`
+				)
+			)
 		};
 	});
 }
@@ -37,6 +43,7 @@ describe('Render errors', function () {
 			{
 				file: 'test/fixtures/errors.scss',
 				message: "Can't find stylesheet to import.",
+				stack: ['at root stylesheet (test/fixtures/errors.scss:2:1)'],
 				source: {
 					end: {
 						column: 13,
@@ -70,6 +77,7 @@ describe('Render errors', function () {
 				file: 'test/fixtures/_becky.scss',
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/_becky.scss:2:20)'],
 				source: {
 					end: {
 						column: 27,
@@ -97,6 +105,7 @@ describe('Render errors', function () {
 					{
 						file: 'stdin',
 						message: "Can't find stylesheet to import.",
+						stack: ['at root stylesheet (stdin:1:1)'],
 						source: {
 							end: {
 								column: 13,
@@ -120,6 +129,7 @@ describe('Render errors', function () {
 						file: 'stdin',
 						message:
 							'There is no module with the namespace "color".',
+						stack: ['at root stylesheet (stdin:1:14)'],
 						source: {
 							end: {
 								column: 29,
@@ -173,7 +183,11 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at @use (test/fixtures/_becky.scss:2:20)',
+					'at root stylesheet (test/fixtures/deprecations.scss:2:1)'
+				]
 			},
 			{
 				file: 'test/fixtures/phoebe/_tyson.scss',
@@ -184,7 +198,11 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at @use (test/fixtures/phoebe/_tyson.scss:2:20)',
+					'at root stylesheet (test/fixtures/deprecations.scss:3:1)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -195,7 +213,10 @@ describe('Render errors', function () {
 				},
 				message:
 					"As of Dart Sass 2.0.0, !global assignments won't be able to declare new variables. Since this assignment is at the root of the stylesheet, the !global flag is. Unnecessary and can safely be removed.",
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:7:1)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -206,7 +227,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:14:20)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -217,7 +241,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 3). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:15:20)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -228,7 +255,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 4). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:16:20)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -239,7 +269,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 5). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:17:20)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -250,7 +283,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 6). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:18:20)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -261,7 +297,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 7). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:19:19)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -272,7 +311,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 8). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:20:20)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -283,7 +325,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 9). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:21:20)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -294,7 +339,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 10). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:22:20)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -305,7 +353,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div($riley, 999). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:23:20)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -316,7 +367,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:24:9)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -327,7 +381,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'Passing a string to call() is deprecated and will be illegal in Dart Sass 2.0.0. Recommendation: call(get-function(willow)).',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:25:9)'
+				]
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -338,7 +395,10 @@ describe('Render errors', function () {
 				},
 				message:
 					'@elseif is deprecated and will not be supported in future Sass versions. Recommendation: @else if.',
-				type: 'deprecation'
+				type: 'deprecation',
+				stack: [
+					'at root stylesheet (test/fixtures/deprecations.scss:28:4)'
+				]
 			}
 		]);
 		assert.deepEqual(actualAsync, expected);
@@ -361,6 +421,9 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/undefined-functions.scss',
 				message: 'Undefined function.',
+				stack: [
+					'at root stylesheet (test/fixtures/undefined-functions.scss:11:9)'
+				],
 				source: {
 					end: {
 						column: 14,
@@ -377,6 +440,9 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/undefined-functions.scss',
 				message: 'Undefined function.',
+				stack: [
+					'at root stylesheet (test/fixtures/undefined-functions.scss:13:16)'
+				],
 				source: {
 					end: {
 						column: 22,
@@ -393,6 +459,9 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/undefined-functions.scss',
 				message: 'Undefined function.',
+				stack: [
+					'at root stylesheet (test/fixtures/undefined-functions.scss:16:11)'
+				],
 				source: {
 					end: {
 						column: 17,
@@ -420,6 +489,7 @@ describe('Undefined functions', function () {
 					{
 						file: 'stdin',
 						message: 'Undefined function.',
+						stack: ['at root stylesheet (stdin:1:15)'],
 						source: {
 							end: {
 								column: 20,
@@ -476,6 +546,9 @@ describe('All implementations', function () {
 			{
 				file: 'test/fixtures/all.deprecations.scss',
 				message: 'Undefined function.',
+				stack: [
+					'at root stylesheet (test/fixtures/all.deprecations.scss:9:9)'
+				],
 				source: {
 					end: {
 						column: 14,
@@ -492,6 +565,9 @@ describe('All implementations', function () {
 			{
 				file: 'test/fixtures/all.deprecations.scss',
 				message: 'Undefined function.',
+				stack: [
+					'at root stylesheet (test/fixtures/all.deprecations.scss:14:11)'
+				],
 				source: {
 					end: {
 						column: 17,
@@ -509,6 +585,9 @@ describe('All implementations', function () {
 				file: 'test/fixtures/all.deprecations.scss',
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: [
+					'at root stylesheet (test/fixtures/all.deprecations.scss:12:24)'
+				],
 				source: {
 					end: {
 						column: 31,
@@ -544,6 +623,7 @@ describe('All implementations', function () {
 					{
 						file: 'stdin',
 						message: 'Undefined function.',
+						stack: ['at root stylesheet (stdin:1:15)'],
 						source: {
 							end: {
 								column: 20,
@@ -561,6 +641,7 @@ describe('All implementations', function () {
 						file: 'stdin',
 						message:
 							'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+						stack: ['at root stylesheet (stdin:1:50)'],
 						source: {
 							end: {
 								column: 57,
