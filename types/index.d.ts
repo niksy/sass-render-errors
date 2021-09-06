@@ -52,5 +52,5 @@ export type SassRenderError = {
     /**
      * Error or deprecation code or pattern of code.
      */
-    type: 'error' | 'deprecation' | null;
+    type: 'error' | 'deprecation';
 };
