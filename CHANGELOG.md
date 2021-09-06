@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.4.3][] - 2021-09-06
+
 ### Changed
 
 -   Return early if there are no undefined functions to check
@@ -93,3 +95,5 @@
 [1.4.1]: https://github.com/niksy/sass-render-errors/tree/v1.4.1
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.2...HEAD
 [1.4.2]: https://github.com/niksy/sass-render-errors/tree/v1.4.2
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.3...HEAD
+[1.4.3]: https://github.com/niksy/sass-render-errors/tree/v1.4.3
