@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Return early if there are no undefined functions to check
+
 ## [1.4.2][] - 2021-09-06
 
 ### Fixed
