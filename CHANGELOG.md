@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.4.0][] - 2021-09-06
+
 ### Changed
 
 -   Clear console output on next cycle
@@ -69,3 +71,5 @@
 [1.2.0]: https://github.com/niksy/sass-render-errors/tree/v1.2.0
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.3.0...HEAD
 [1.3.0]: https://github.com/niksy/sass-render-errors/tree/v1.3.0
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/niksy/sass-render-errors/tree/v1.4.0
