@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.4.1][] - 2021-09-06
+
 ### Fixed
 
 -   Report functions with processed variables
@@ -77,3 +79,5 @@
 [1.3.0]: https://github.com/niksy/sass-render-errors/tree/v1.3.0
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.0...HEAD
 [1.4.0]: https://github.com/niksy/sass-render-errors/tree/v1.4.0
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/niksy/sass-render-errors/tree/v1.4.1
