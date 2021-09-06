@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Skip empty function names
+
 ## [1.4.1][] - 2021-09-06
 
 ### Fixed
