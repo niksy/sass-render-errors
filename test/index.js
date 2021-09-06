@@ -435,3 +435,155 @@ describe('Undefined functions', function () {
 		);
 	});
 });
+
+describe('All implementations', function () {
+	it('should handle errors', async function () {
+		const rendererErrors = renderErrors(sass);
+		const rendererUndefinedFunctions = undefinedFunctions(sass);
+		const actualAsync = await Promise.all([
+			rendererUndefinedFunctions.render({
+				file: './test/fixtures/all.deprecations.scss'
+			}),
+			rendererErrors.render({
+				file: './test/fixtures/all.deprecations.scss'
+			})
+		]);
+		const actualSync = await Promise.all([
+			rendererUndefinedFunctions.renderSync({
+				file: './test/fixtures/all.deprecations.scss'
+			}),
+			rendererErrors.renderSync({
+				file: './test/fixtures/all.deprecations.scss'
+			})
+		]);
+		const expected = resolveExpectedResults([
+			{
+				file: 'test/fixtures/all.deprecations.scss',
+				message: 'Undefined function.',
+				source: {
+					end: {
+						column: 14,
+						line: 9
+					},
+					pattern: 'becky',
+					start: {
+						column: 9,
+						line: 9
+					}
+				},
+				type: 'error'
+			},
+			{
+				file: 'test/fixtures/all.deprecations.scss',
+				message: 'Undefined function.',
+				source: {
+					end: {
+						column: 17,
+						line: 14
+					},
+					pattern: 'harley',
+					start: {
+						column: 11,
+						line: 14
+					}
+				},
+				type: 'error'
+			},
+			{
+				file: 'test/fixtures/all.deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				source: {
+					end: {
+						column: 31,
+						line: 12
+					},
+					pattern: '100 / 2',
+					start: {
+						column: 24,
+						line: 12
+					}
+				},
+				type: 'deprecation'
+			}
+		]);
+
+		/** @type {SassRenderError[]} */
+		const asyncResults = [];
+		/** @type {SassRenderError[]} */
+		const syncResults = [];
+
+		assert.deepEqual(asyncResults.concat(...actualAsync), expected);
+		assert.deepEqual(syncResults.concat(...actualSync), expected);
+	});
+
+	it('should handle errors from data string', async function () {
+		const testCases = [
+			{
+				input: {
+					data: 'body { color: becky(#f00); min-width: percentage(100 / 2); }'
+				},
+				/** @type {SassRenderError[]} */
+				output: [
+					{
+						file: 'stdin',
+						message: 'Undefined function.',
+						source: {
+							end: {
+								column: 20,
+								line: 1
+							},
+							pattern: 'becky',
+							start: {
+								column: 15,
+								line: 1
+							}
+						},
+						type: 'error'
+					},
+					{
+						file: 'stdin',
+						message:
+							'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+						source: {
+							end: {
+								column: 57,
+								line: 1
+							},
+							pattern: '100 / 2',
+							start: {
+								column: 50,
+								line: 1
+							}
+						},
+						type: 'deprecation'
+					}
+				]
+			}
+		];
+
+		await Promise.all(
+			testCases.map(async (testCase) => {
+				const rendererErrors = renderErrors(sass);
+				const rendererUndefinedFunctions = undefinedFunctions(sass);
+				const actualAsync = await Promise.all([
+					rendererUndefinedFunctions.render(testCase.input),
+					rendererErrors.render(testCase.input)
+				]);
+				const actualSync = await Promise.all([
+					rendererUndefinedFunctions.renderSync(testCase.input),
+					rendererErrors.renderSync(testCase.input)
+				]);
+				const expected = resolveExpectedResults(testCase.output);
+
+				/** @type {SassRenderError[]} */
+				const asyncResults = [];
+				/** @type {SassRenderError[]} */
+				const syncResults = [];
+
+				assert.deepEqual(asyncResults.concat(...actualAsync), expected);
+				assert.deepEqual(syncResults.concat(...actualSync), expected);
+			})
+		);
+	});
+});
