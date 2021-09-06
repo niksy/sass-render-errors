@@ -364,12 +364,28 @@ describe('Undefined functions', function () {
 				source: {
 					end: {
 						column: 14,
-						line: 9
+						line: 11
 					},
 					pattern: 'becky',
 					start: {
 						column: 9,
-						line: 9
+						line: 11
+					}
+				},
+				type: 'error'
+			},
+			{
+				file: 'test/fixtures/undefined-functions.scss',
+				message: 'Undefined function.',
+				source: {
+					end: {
+						column: 22,
+						line: 13
+					},
+					pattern: 'harley',
+					start: {
+						column: 16,
+						line: 13
 					}
 				},
 				type: 'error'
@@ -380,12 +396,12 @@ describe('Undefined functions', function () {
 				source: {
 					end: {
 						column: 17,
-						line: 13
+						line: 16
 					},
 					pattern: 'harley',
 					start: {
 						column: 11,
-						line: 13
+						line: 16
 					}
 				},
 				type: 'error'

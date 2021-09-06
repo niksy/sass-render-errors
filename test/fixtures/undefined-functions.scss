@@ -1,5 +1,7 @@
 @use 'sass:color';
 
+$lily: #ff0;
+
 @function minnie($color) {
 	@return $color;
 }
@@ -8,6 +10,7 @@ body {
 	width: calc(100 + 1px);
 	color: becky(#f00);
 	font-family: minnie(1);
+	border-color: harley($lily);
 	background-color: color.invert(#f00);
 	@if false {
 		height: harley(hotpink);

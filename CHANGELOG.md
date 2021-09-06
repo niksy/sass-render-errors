@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Report functions with processed variables
+
 ## [1.4.0][] - 2021-09-06
 
 ### Changed
