@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Clear console output on next cycle
+
 ## [1.3.0][] - 2021-09-06
 
 ### Changed
