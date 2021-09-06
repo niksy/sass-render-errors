@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.4.2][] - 2021-09-06
+
 ### Fixed
 
 -   Skip empty function names
@@ -85,3 +87,5 @@
 [1.4.0]: https://github.com/niksy/sass-render-errors/tree/v1.4.0
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.1...HEAD
 [1.4.1]: https://github.com/niksy/sass-render-errors/tree/v1.4.1
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.2...HEAD
+[1.4.2]: https://github.com/niksy/sass-render-errors/tree/v1.4.2
