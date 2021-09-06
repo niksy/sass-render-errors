@@ -2,6 +2,12 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Consolidate console output getter
+-   Normalize `stdin` resolving
+-   Handle multiple async process output
+
 ## [1.2.0][] - 2021-09-03
 
 ### Changed
