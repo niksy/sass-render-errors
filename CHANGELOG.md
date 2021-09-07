@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.5.0][] - 2021-09-07
+
 ### Added
 
 -   Support for stack trace
@@ -101,3 +103,5 @@
 [1.4.2]: https://github.com/niksy/sass-render-errors/tree/v1.4.2
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.3...HEAD
 [1.4.3]: https://github.com/niksy/sass-render-errors/tree/v1.4.3
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/niksy/sass-render-errors/tree/v1.5.0
