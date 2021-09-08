@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.5.2][] - 2021-09-08
+
 ### Fixed
 
 -   Parsing of function declaration and invocation errors
@@ -117,3 +119,5 @@
 [1.5.0]: https://github.com/niksy/sass-render-errors/tree/v1.5.0
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.5.1...HEAD
 [1.5.1]: https://github.com/niksy/sass-render-errors/tree/v1.5.1
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.5.2...HEAD
+[1.5.2]: https://github.com/niksy/sass-render-errors/tree/v1.5.2
