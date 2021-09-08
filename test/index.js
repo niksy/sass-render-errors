@@ -474,6 +474,25 @@ describe('Undefined functions', function () {
 					}
 				},
 				type: 'error'
+			},
+			{
+				file: 'test/fixtures/undefined-functions.scss',
+				message: 'Undefined function.',
+				stack: [
+					'at root stylesheet (test/fixtures/undefined-functions.scss:18:19)'
+				],
+				source: {
+					end: {
+						column: 25,
+						line: 18
+					},
+					pattern: 'harley',
+					start: {
+						column: 19,
+						line: 18
+					}
+				},
+				type: 'error'
 			}
 		]);
 		assert.deepEqual(actualAsync, expected);

@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Interpolated strings handling in function names
+
 ## [1.5.0][] - 2021-09-07
 
 ### Added
