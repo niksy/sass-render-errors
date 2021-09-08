@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.5.1][] - 2021-09-08
+
 ### Fixed
 
 -   Interpolated strings handling in function names
@@ -109,3 +111,5 @@
 [1.4.3]: https://github.com/niksy/sass-render-errors/tree/v1.4.3
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.5.0...HEAD
 [1.5.0]: https://github.com/niksy/sass-render-errors/tree/v1.5.0
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.5.1...HEAD
+[1.5.1]: https://github.com/niksy/sass-render-errors/tree/v1.5.1
