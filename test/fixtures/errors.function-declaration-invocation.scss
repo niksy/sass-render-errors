@@ -1,0 +1,7 @@
+@function nikki () {
+	@return 1;
+}
+
+body {
+	color: nikki(2);
+}

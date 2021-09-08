@@ -20,8 +20,8 @@ function resolveExpectedResults(expected) {
 			file: path.resolve(__dirname, '..', entry.file),
 			stack: entry.stack.map((string) =>
 				string.replace(
-					/\((.+?):/,
-					(match, file) => `(${path.resolve(__dirname, '..', file)}:`
+					/\s\((.+?):/,
+					(match, file) => ` (${path.resolve(__dirname, '..', file)}:`
 				)
 			)
 		};
@@ -53,6 +53,42 @@ describe('Render errors', function () {
 					start: {
 						column: 1,
 						line: 2
+					}
+				},
+				type: 'error'
+			}
+		]);
+		assert.deepEqual(actualAsync, expected);
+		assert.deepEqual(actualSync, expected);
+	});
+
+	it('should handle errors for function declarations and invocations', async function () {
+		const renderer = renderErrors(sass);
+		const [actualAsync, actualSync] = await Promise.all([
+			renderer.render({
+				file: './test/fixtures/errors.function-declaration-invocation.scss'
+			}),
+			renderer.renderSync({
+				file: './test/fixtures/errors.function-declaration-invocation.scss'
+			})
+		]);
+		const expected = resolveExpectedResults([
+			{
+				file: 'test/fixtures/errors.function-declaration-invocation.scss',
+				message: 'Only 0 arguments allowed, but 1 was passed.',
+				stack: [
+					'at nikki() (test/fixtures/errors.function-declaration-invocation.scss:6:9)',
+					'at root stylesheet (test/fixtures/errors.function-declaration-invocation.scss:6:9)'
+				],
+				source: {
+					end: {
+						column: 17,
+						line: 6
+					},
+					pattern: 'nikki(2)',
+					start: {
+						column: 9,
+						line: 6
 					}
 				},
 				type: 'error'

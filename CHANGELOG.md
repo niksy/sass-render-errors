@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Parsing of function declaration and invocation errors
+
 ## [1.5.1][] - 2021-09-08
 
 ### Fixed
