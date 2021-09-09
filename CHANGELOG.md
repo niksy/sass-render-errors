@@ -2,6 +2,14 @@
 
 ## [Unreleased][]
 
+### Added
+
+-   Support for functions in `@else`, `@import`, `@use` and `@forward` blocks
+
+### Changed
+
+-   Optimize undefined functions processing
+
 ## [1.5.2][] - 2021-09-08
 
 ### Fixed
