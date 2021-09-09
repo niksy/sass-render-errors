@@ -40,6 +40,7 @@ import sass from 'sass';
 			type: 'deprecation',
 			file: '<absolute path>/index.scss',
 			message: 'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).',
+			detail: '\n\n   ╷\n4 │     color: color.invert(1);\n   │            ^^^^^^^^^^^^^^^\n   ╵',
 			stack: [
 				'at root stylesheet (<absolute path>/index.scss:4:24)'
 			],
@@ -103,6 +104,7 @@ Each array entry is object which contains following properties:
 | --------------------- | ---------- | ----------------------------------------------------------- |
 | `file`                | `string`   | Absolute path to file or `stdin` with error or deprecation. |
 | `message`             | `string`   | Error or deprecation message.                               |
+| `detail`              | `string`   | Error or deprecation detail.                                |
 | `stack`               | `string[]` | Stack trace of error or deprecation.                        |
 | `source.start.column` | `number`   | Pattern start column.                                       |
 | `source.start.line`   | `number`   | Pattern start line.                                         |
