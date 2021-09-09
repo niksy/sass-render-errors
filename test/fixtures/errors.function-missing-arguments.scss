@@ -1,0 +1,5 @@
+@use 'sass:math';
+
+body {
+	color: math.div(2);
+}

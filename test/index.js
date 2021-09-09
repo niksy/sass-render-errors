@@ -100,6 +100,41 @@ describe('Render errors', function () {
 		assert.deepEqual(actualSync, expected);
 	});
 
+	it('should handle errors for function missing arguments', async function () {
+		const renderer = renderErrors(sass);
+		const [actualAsync, actualSync] = await Promise.all([
+			renderer.render({
+				file: './test/fixtures/errors.function-missing-arguments.scss'
+			}),
+			renderer.renderSync({
+				file: './test/fixtures/errors.function-missing-arguments.scss'
+			})
+		]);
+		const expected = resolveExpectedResults([
+			{
+				file: 'test/fixtures/errors.function-missing-arguments.scss',
+				message: 'Missing argument $number2.',
+				stack: [
+					'at root stylesheet (test/fixtures/errors.function-missing-arguments.scss:4:9)'
+				],
+				source: {
+					end: {
+						column: 20,
+						line: 4
+					},
+					pattern: 'math.div(2)',
+					start: {
+						column: 9,
+						line: 4
+					}
+				},
+				type: 'error'
+			}
+		]);
+		assert.deepEqual(actualAsync, expected);
+		assert.deepEqual(actualSync, expected);
+	});
+
 	it('should handle partials', async function () {
 		const renderer = renderErrors(sass);
 		const [actualAsync, actualSync] = await Promise.all([

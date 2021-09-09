@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Catch error for function with missing arguments
+
 ## [1.6.0][] - 2021-09-09
 
 ### Added
