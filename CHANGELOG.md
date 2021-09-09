@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.6.1][] - 2021-09-09
+
 ### Fixed
 
 -   Catch error for function with missing arguments
@@ -137,3 +139,5 @@
 [1.5.2]: https://github.com/niksy/sass-render-errors/tree/v1.5.2
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.6.0...HEAD
 [1.6.0]: https://github.com/niksy/sass-render-errors/tree/v1.6.0
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.6.1...HEAD
+[1.6.1]: https://github.com/niksy/sass-render-errors/tree/v1.6.1
