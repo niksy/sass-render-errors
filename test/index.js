@@ -517,17 +517,36 @@ describe('Undefined functions', function () {
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
 				stack: [
-					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:18:19)'
+					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:18:10)'
 				],
 				source: {
 					end: {
-						column: 25,
+						column: 14,
 						line: 18
 					},
-					pattern: 'harley',
+					pattern: 'oreo',
+					start: {
+						column: 10,
+						line: 18
+					}
+				},
+				type: 'error'
+			},
+			{
+				file: 'test/fixtures/errors.undefined-functions.scss',
+				message: 'Undefined function.',
+				stack: [
+					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:20:19)'
+				],
+				source: {
+					end: {
+						column: 23,
+						line: 20
+					},
+					pattern: 'kona',
 					start: {
 						column: 19,
-						line: 18
+						line: 20
 					}
 				},
 				type: 'error'
