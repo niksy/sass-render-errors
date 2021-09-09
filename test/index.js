@@ -33,17 +33,19 @@ describe('Render errors', function () {
 		const renderer = renderErrors(sass);
 		const [actualAsync, actualSync] = await Promise.all([
 			renderer.render({
-				file: './test/fixtures/errors.scss'
+				file: './test/fixtures/errors.stylesheet-import.scss'
 			}),
 			renderer.renderSync({
-				file: './test/fixtures/errors.scss'
+				file: './test/fixtures/errors.stylesheet-import.scss'
 			})
 		]);
 		const expected = resolveExpectedResults([
 			{
-				file: 'test/fixtures/errors.scss',
+				file: 'test/fixtures/errors.stylesheet-import.scss',
 				message: "Can't find stylesheet to import.",
-				stack: ['at root stylesheet (test/fixtures/errors.scss:2:1)'],
+				stack: [
+					'at root stylesheet (test/fixtures/errors.stylesheet-import.scss:2:1)'
+				],
 				source: {
 					end: {
 						column: 13,
@@ -447,18 +449,18 @@ describe('Undefined functions', function () {
 		const renderer = undefinedFunctions(sass);
 		const [actualAsync, actualSync] = await Promise.all([
 			renderer.render({
-				file: './test/fixtures/undefined-functions.scss'
+				file: './test/fixtures/errors.undefined-functions.scss'
 			}),
 			renderer.renderSync({
-				file: './test/fixtures/undefined-functions.scss'
+				file: './test/fixtures/errors.undefined-functions.scss'
 			})
 		]);
 		const expected = resolveExpectedResults([
 			{
-				file: 'test/fixtures/undefined-functions.scss',
+				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
 				stack: [
-					'at root stylesheet (test/fixtures/undefined-functions.scss:11:9)'
+					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:11:9)'
 				],
 				source: {
 					end: {
@@ -474,10 +476,10 @@ describe('Undefined functions', function () {
 				type: 'error'
 			},
 			{
-				file: 'test/fixtures/undefined-functions.scss',
+				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
 				stack: [
-					'at root stylesheet (test/fixtures/undefined-functions.scss:13:16)'
+					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:13:16)'
 				],
 				source: {
 					end: {
@@ -493,10 +495,10 @@ describe('Undefined functions', function () {
 				type: 'error'
 			},
 			{
-				file: 'test/fixtures/undefined-functions.scss',
+				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
 				stack: [
-					'at root stylesheet (test/fixtures/undefined-functions.scss:16:11)'
+					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:16:11)'
 				],
 				source: {
 					end: {
@@ -512,10 +514,10 @@ describe('Undefined functions', function () {
 				type: 'error'
 			},
 			{
-				file: 'test/fixtures/undefined-functions.scss',
+				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
 				stack: [
-					'at root stylesheet (test/fixtures/undefined-functions.scss:18:19)'
+					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:18:19)'
 				],
 				source: {
 					end: {
@@ -583,26 +585,26 @@ describe('All implementations', function () {
 		const rendererUndefinedFunctions = undefinedFunctions(sass);
 		const actualAsync = await Promise.all([
 			rendererUndefinedFunctions.render({
-				file: './test/fixtures/all.deprecations.scss'
+				file: './test/fixtures/deprecations.all.scss'
 			}),
 			rendererErrors.render({
-				file: './test/fixtures/all.deprecations.scss'
+				file: './test/fixtures/deprecations.all.scss'
 			})
 		]);
 		const actualSync = await Promise.all([
 			rendererUndefinedFunctions.renderSync({
-				file: './test/fixtures/all.deprecations.scss'
+				file: './test/fixtures/deprecations.all.scss'
 			}),
 			rendererErrors.renderSync({
-				file: './test/fixtures/all.deprecations.scss'
+				file: './test/fixtures/deprecations.all.scss'
 			})
 		]);
 		const expected = resolveExpectedResults([
 			{
-				file: 'test/fixtures/all.deprecations.scss',
+				file: 'test/fixtures/deprecations.all.scss',
 				message: 'Undefined function.',
 				stack: [
-					'at root stylesheet (test/fixtures/all.deprecations.scss:9:9)'
+					'at root stylesheet (test/fixtures/deprecations.all.scss:9:9)'
 				],
 				source: {
 					end: {
@@ -618,10 +620,10 @@ describe('All implementations', function () {
 				type: 'error'
 			},
 			{
-				file: 'test/fixtures/all.deprecations.scss',
+				file: 'test/fixtures/deprecations.all.scss',
 				message: 'Undefined function.',
 				stack: [
-					'at root stylesheet (test/fixtures/all.deprecations.scss:14:11)'
+					'at root stylesheet (test/fixtures/deprecations.all.scss:14:11)'
 				],
 				source: {
 					end: {
@@ -637,11 +639,11 @@ describe('All implementations', function () {
 				type: 'error'
 			},
 			{
-				file: 'test/fixtures/all.deprecations.scss',
+				file: 'test/fixtures/deprecations.all.scss',
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				stack: [
-					'at root stylesheet (test/fixtures/all.deprecations.scss:12:24)'
+					'at root stylesheet (test/fixtures/deprecations.all.scss:12:24)'
 				],
 				source: {
 					end: {
