@@ -135,8 +135,8 @@ MIT © [Ivan Nikolić](http://ivannikolic.com)
 
 <!-- prettier-ignore-start -->
 
-[ci]: https://travis-ci.com/niksy/sass-render-errors
-[ci-img]: https://travis-ci.com/niksy/sass-render-errors.svg?branch=master
+[ci]: https://github.com/niksy/sass-render-errors/actions?query=workflow%3ACI
+[ci-img]: https://github.com/niksy/sass-render-errors/workflows/CI/badge.svg?branch=master
 [dart-sass]: https://github.com/sass/dart-sass
 
 <!-- prettier-ignore-end -->

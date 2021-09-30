@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Added
+
+-   Support for disallowed known CSS functions
+
 ## [1.6.1][] - 2021-09-09
 
 ### Fixed
