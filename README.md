@@ -71,7 +71,7 @@ import sass from 'sass';
 
 ## API
 
-### sassRenderErrors(sass)
+### sassRenderErrors(sass[, options])
 
 Creates [Sass renderer](#renderer) with methods `render` and `renderSync`. Both
 methods return `Promise`, but internally use original Sass rendering methods.
@@ -85,6 +85,16 @@ This way you can
 Sass is injected as dependancy because each version has different set of errors
 and deprecations and you should get results for Sass version your application
 uses.
+
+#### options
+
+Type: `object`
+
+For undefined functions:
+
+| Property                      | Type       | Description                             |
+| ----------------------------- | ---------- | --------------------------------------- |
+| `disallowedKnownCssFunctions` | `string[]` | List of disallowed known CSS functions. |
 
 ### renderer\[render|renderSync\]([options])<a name="renderer" />
 
