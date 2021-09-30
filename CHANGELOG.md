@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.7.0][] - 2021-09-30
+
 ### Added
 
 -   Support for disallowed known CSS functions
@@ -145,3 +147,5 @@
 [1.6.0]: https://github.com/niksy/sass-render-errors/tree/v1.6.0
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.6.1...HEAD
 [1.6.1]: https://github.com/niksy/sass-render-errors/tree/v1.6.1
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/niksy/sass-render-errors/tree/v1.7.0
