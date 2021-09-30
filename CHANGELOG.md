@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Optimize known CSS functions list
+
 ## [1.7.0][] - 2021-09-30
 
 ### Added
