@@ -29,7 +29,6 @@
     "build": "rollup --config rollup.config.js",
     "lint": "eslint '{index,lib/**/*,test/**/*}.js'",
     "lint:types": "tsc",
-    "premodule-check": "[[ $(uname -m) == arm64 && $(which brew) && -f \"$(brew --prefix nvm)/nvm.sh\" ]] && source \"$(brew --prefix nvm)/nvm.sh\" || true && nvm use 16 || true && echo $(dirname $(which node)) > .node",
     "module-check": "node -e 'require(\"sass-render-errors\");' && node --input-type=module -e 'import \"sass-render-errors\";'",
     "prepublishOnly": "npm run build",
     "postpublish": "GITHUB_TOKEN=$GITHUB_RELEASE_TOKEN github-release-from-changelog",
