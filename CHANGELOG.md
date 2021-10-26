@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.7.2][] - 2021-10-26
+
 ### Changed
 
 -   Console output parsing
@@ -161,3 +163,5 @@
 [1.7.0]: https://github.com/niksy/sass-render-errors/tree/v1.7.0
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.7.1...HEAD
 [1.7.1]: https://github.com/niksy/sass-render-errors/tree/v1.7.1
+[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.7.2...HEAD
+[1.7.2]: https://github.com/niksy/sass-render-errors/tree/v1.7.2
