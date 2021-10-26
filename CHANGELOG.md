@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Use PostCSS 8 ([#3](/issues/3))
+
 ## [1.7.2][] - 2021-10-26
 
 ### Changed
