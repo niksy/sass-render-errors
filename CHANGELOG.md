@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Console output parsing
+
 ## [1.7.1][] - 2021-09-30
 
 ### Changed
