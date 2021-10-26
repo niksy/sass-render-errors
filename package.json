@@ -1,6 +1,6 @@
 {
   "name": "sass-render-errors",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "description": "Get Sass render errors and deprecations.",
   "license": "MIT",
   "author": "Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com)",
