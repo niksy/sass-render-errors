@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [1.8.1][] - 2023-05-01
+
 ### Changed
 
 -   Update Sass JSON function signature
@@ -177,3 +179,5 @@
 [1.7.2]: https://github.com/niksy/sass-render-errors/tree/v1.7.2
 [unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.8.0...HEAD
 [1.8.0]: https://github.com/niksy/sass-render-errors/tree/v1.8.0
+[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.8.1...HEAD
+[1.8.1]: https://github.com/niksy/sass-render-errors/tree/v1.8.1
