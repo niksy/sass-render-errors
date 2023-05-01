@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Update Sass JSON function signature
+
 ## [1.8.0][] - 2021-10-26
 
 ### Changed

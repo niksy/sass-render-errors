@@ -425,7 +425,7 @@ describe('Render errors', function () {
 					pattern: '$riley / 999'
 				},
 				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div($riley, 999). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+					'Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div($riley, 999) or calc($riley / 999). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
 				stack: [
 					'at root stylesheet (test/fixtures/deprecations.scss:23:20)'
