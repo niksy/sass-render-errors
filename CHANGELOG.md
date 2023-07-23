@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Use pure style content first for undefined functions check ([#6](/issues/6))
+
 ## [1.8.1][] - 2023-05-01
 
 ### Changed
