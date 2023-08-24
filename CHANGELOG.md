@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Update external dependency referencing when used as ES package
+
 ## [1.8.2][] - 2023-07-23
 
 ### Fixed
