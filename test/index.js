@@ -591,9 +591,66 @@ describe('Undefined functions', function () {
 		assert.deepEqual(actualSync, expected);
 	});
 
-	it('should handle errors, disallowed known CSS functions', async function () {
+	it('should handle errors, disallowed known and additional unknown CSS functions', async function () {
 		const renderer = undefinedFunctions(sass, {
 			disallowedKnownCssFunctions: ['rem']
+		});
+		const [actualAsync, actualSync] = await Promise.all([
+			renderer.render({
+				file: './test/fixtures/errors.undefined-functions.disallowed-functions.scss'
+			}),
+			renderer.renderSync({
+				file: './test/fixtures/errors.undefined-functions.disallowed-functions.scss'
+			})
+		]);
+		const expected = resolveExpectedResults([
+			{
+				file: 'test/fixtures/errors.undefined-functions.disallowed-functions.scss',
+				message: 'Undefined function.',
+				stack: [
+					'at root stylesheet (test/fixtures/errors.undefined-functions.disallowed-functions.scss:2:14)'
+				],
+				source: {
+					end: {
+						column: 17,
+						line: 2
+					},
+					pattern: 'rem',
+					start: {
+						column: 14,
+						line: 2
+					}
+				},
+				type: 'error'
+			},
+			{
+				file: 'test/fixtures/errors.undefined-functions.disallowed-functions.scss',
+				message: 'Undefined function.',
+				stack: [
+					'at root stylesheet (test/fixtures/errors.undefined-functions.disallowed-functions.scss:3:10)'
+				],
+				source: {
+					end: {
+						column: 16,
+						line: 3
+					},
+					pattern: 'v-bind',
+					start: {
+						column: 10,
+						line: 3
+					}
+				},
+				type: 'error'
+			}
+		]);
+		assert.deepEqual(actualAsync, expected);
+		assert.deepEqual(actualSync, expected);
+	});
+
+	it('should handle errors, disallowed known and allowed additional known CSS functions', async function () {
+		const renderer = undefinedFunctions(sass, {
+			disallowedKnownCssFunctions: ['rem'],
+			additionalKnownCssFunctions: ['v-bind']
 		});
 		const [actualAsync, actualSync] = await Promise.all([
 			renderer.render({
@@ -669,10 +726,74 @@ describe('Undefined functions', function () {
 		);
 	});
 
-	it('should handle errors from data string, disallowed known CSS functions', async function () {
+	it('should handle errors from data string, disallowed known and additional unknown CSS functions', async function () {
 		const testCases = [
 			{
-				input: { data: 'body { min-height: rem(10); }' },
+				input: {
+					data: 'body { min-height: rem(10); height: v-bind(height); }'
+				},
+				/** @type {SassRenderError[]} */
+				output: [
+					{
+						file: 'stdin',
+						message: 'Undefined function.',
+						stack: ['at root stylesheet (stdin:1:20)'],
+						source: {
+							end: {
+								column: 23,
+								line: 1
+							},
+							pattern: 'rem',
+							start: {
+								column: 20,
+								line: 1
+							}
+						},
+						type: 'error'
+					},
+					{
+						file: 'stdin',
+						message: 'Undefined function.',
+						stack: ['at root stylesheet (stdin:1:37)'],
+						source: {
+							end: {
+								column: 43,
+								line: 1
+							},
+							pattern: 'v-bind',
+							start: {
+								column: 37,
+								line: 1
+							}
+						},
+						type: 'error'
+					}
+				]
+			}
+		];
+
+		await Promise.all(
+			testCases.map(async (testCase) => {
+				const renderer = undefinedFunctions(sass, {
+					disallowedKnownCssFunctions: ['rem']
+				});
+				const [actualAsync, actualSync] = await Promise.all([
+					renderer.render(testCase.input),
+					renderer.renderSync(testCase.input)
+				]);
+				const expected = resolveExpectedResults(testCase.output);
+				assert.deepEqual(actualAsync, expected);
+				assert.deepEqual(actualSync, expected);
+			})
+		);
+	});
+
+	it('should handle errors from data string, disallowed known and allowed additional known CSS functions', async function () {
+		const testCases = [
+			{
+				input: {
+					data: 'body { min-height: rem(10); height: v-bind(height); }'
+				},
 				/** @type {SassRenderError[]} */
 				output: [
 					{
@@ -699,7 +820,8 @@ describe('Undefined functions', function () {
 		await Promise.all(
 			testCases.map(async (testCase) => {
 				const renderer = undefinedFunctions(sass, {
-					disallowedKnownCssFunctions: ['rem']
+					disallowedKnownCssFunctions: ['rem'],
+					additionalKnownCssFunctions: ['v-bind']
 				});
 				const [actualAsync, actualSync] = await Promise.all([
 					renderer.render(testCase.input),

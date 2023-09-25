@@ -92,9 +92,10 @@ Type: `object`
 
 For undefined functions:
 
-| Property                      | Type       | Description                             |
-| ----------------------------- | ---------- | --------------------------------------- |
-| `disallowedKnownCssFunctions` | `string[]` | List of disallowed known CSS functions. |
+| Property                      | Type       | Description                                                                                                                      |
+| ----------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `disallowedKnownCssFunctions` | `string[]` | List of disallowed known CSS functions.                                                                                          |
+| `additionalKnownCssFunctions` | `string[]` | List of additional known CSS functions (e.g. [`v-bind` for Vue SFC](https://vuejs.org/api/sfc-css-features.html#v-bind-in-css)). |
 
 ### renderer\[render|renderSync\]([options])<a name="renderer" />
 

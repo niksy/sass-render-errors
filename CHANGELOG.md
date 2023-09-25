@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Added
+
+-   Support for additional known CSS functions
+
 ## [1.8.3][] - 2023-08-24
 
 ### Changed
