@@ -38,17 +38,12 @@
   },
   "dependencies": {
     "css-functions-list": "^3.2.1",
-    "hook-std": "^2.0.0",
     "nanoid": "^5.0.7",
     "node-sass-json-functions": "^3.3.0",
-    "p-debounce": "^4.0.0",
     "p-memoize": "^7.1.1",
-    "p-queue": "^8.0.1",
     "postcss": "^8.3.11",
     "postcss-scss": "^4.0.1",
-    "postcss-value-parser": "^4.1.0",
-    "string-match-all": "^1.0.0",
-    "strip-ansi": "^6.0.1"
+    "postcss-value-parser": "^4.1.0"
   },
   "devDependencies": {
     "@istanbuljs/esm-loader-hook": "^0.2.0",

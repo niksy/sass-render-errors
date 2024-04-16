@@ -45,6 +45,24 @@ describe('Render errors', function () {
 		const expected = resolveExpectedResults([
 			{
 				file: 'test/fixtures/errors.stylesheet-import.scss',
+				message:
+					'@elseif is deprecated and will not be supported in future Sass versions. Recommendation: @else if.',
+				source: {
+					start: {
+						column: 4,
+						line: 27
+					},
+					end: {
+						column: 11,
+						line: 27
+					},
+					pattern: '@elseif'
+				},
+				stack: [],
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/errors.stylesheet-import.scss',
 				message: "Can't find stylesheet to import.",
 				stack: [
 					'at root stylesheet (test/fixtures/errors.stylesheet-import.scss:2:1)'
@@ -250,6 +268,24 @@ describe('Render errors', function () {
 			})
 		]);
 		const expected = resolveExpectedResults([
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'@elseif is deprecated and will not be supported in future Sass versions. Recommendation: @else if.',
+				source: {
+					start: {
+						column: 4,
+						line: 28
+					},
+					end: {
+						column: 11,
+						line: 28
+					},
+					pattern: '@elseif'
+				},
+				stack: [],
+				type: 'deprecation'
+			},
 			{
 				file: 'test/fixtures/_becky.scss',
 				source: {
@@ -460,20 +496,6 @@ describe('Render errors', function () {
 				type: 'deprecation',
 				stack: [
 					'at root stylesheet (test/fixtures/deprecations.scss:25:9)'
-				]
-			},
-			{
-				file: 'test/fixtures/deprecations.scss',
-				source: {
-					start: { line: 28, column: 4 },
-					end: { line: 28, column: 11 },
-					pattern: '@elseif'
-				},
-				message:
-					'@elseif is deprecated and will not be supported in future Sass versions. Recommendation: @else if.',
-				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:28:4)'
 				]
 			}
 		]);
