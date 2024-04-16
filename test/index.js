@@ -1,10 +1,12 @@
-import path from 'path';
-import assert from 'assert';
+/* eslint-disable unicorn/prefer-spread, max-lines, n/no-sync */
+
+import assert from 'node:assert';
+import { fileURLToPath } from 'node:url';
 import sass from 'sass';
-import renderErrors, { undefinedFunctions } from '../index';
+import renderErrors, { undefinedFunctions } from '../index.js';
 
 /**
- * @typedef {import('../lib/render-errors').SassRenderError} SassRenderError
+ * @typedef {import('../lib/render-errors.js').SassRenderError} SassRenderError
  */
 
 /**
@@ -17,11 +19,12 @@ function resolveExpectedResults(expected) {
 		}
 		return {
 			...entry,
-			file: path.resolve(__dirname, '..', entry.file),
+			file: fileURLToPath(new URL(`../${entry.file}`, import.meta.url)),
 			stack: entry.stack.map((string) =>
 				string.replace(
 					/\s\((.+?):/,
-					(match, file) => ` (${path.resolve(__dirname, '..', file)}:`
+					(match, file) =>
+						` (${fileURLToPath(new URL(`../${file}`, import.meta.url))}:`
 				)
 			)
 		};

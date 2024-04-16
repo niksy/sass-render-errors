@@ -5,6 +5,4 @@ yarn.lock
 npm-debug.log
 .nyc_output/
 coverage/
-cjs/
-esm/
 !test/fixtures/node_modules/
