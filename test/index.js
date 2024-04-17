@@ -7,6 +7,7 @@ import renderErrors, { undefinedFunctions } from '../index.js';
 
 /**
  * @typedef {import('../lib/render-errors.js').SassRenderError} SassRenderError
+ * @typedef {{input: string, output: SassRenderError[]}} StringTestCase
  */
 
 /**
@@ -14,19 +15,10 @@ import renderErrors, { undefinedFunctions } from '../index.js';
  */
 function resolveExpectedResults(expected) {
 	return expected.map((entry) => {
-		if (entry.file === 'stdin') {
-			return entry;
-		}
+		const file = entry.file;
 		return {
 			...entry,
-			file: fileURLToPath(new URL(`../${entry.file}`, import.meta.url)),
-			stack: entry.stack.map((string) =>
-				string.replace(
-					/\s\((.+?):/,
-					(match, file) =>
-						` (${fileURLToPath(new URL(`../${file}`, import.meta.url))}:`
-				)
-			)
+			file: file === 'stdin' ? 'stdin' : fileURLToPath(new URL(`../${file}`, import.meta.url))
 		};
 	});
 }
@@ -35,12 +27,8 @@ describe('Render errors', function () {
 	it('should handle errors', async function () {
 		const renderer = renderErrors(sass);
 		const [actualAsync, actualSync] = await Promise.all([
-			renderer.render({
-				file: './test/fixtures/errors.stylesheet-import.scss'
-			}),
-			renderer.renderSync({
-				file: './test/fixtures/errors.stylesheet-import.scss'
-			})
+			renderer.compileAsync('./test/fixtures/errors.stylesheet-import.scss'),
+			renderer.compile('./test/fixtures/errors.stylesheet-import.scss')
 		]);
 		const expected = resolveExpectedResults([
 			{
@@ -64,9 +52,7 @@ describe('Render errors', function () {
 			{
 				file: 'test/fixtures/errors.stylesheet-import.scss',
 				message: "Can't find stylesheet to import.",
-				stack: [
-					'at root stylesheet (test/fixtures/errors.stylesheet-import.scss:2:1)'
-				],
+				stack: ['at root stylesheet (test/fixtures/errors.stylesheet-import.scss:2:1)'],
 				source: {
 					end: {
 						column: 13,
@@ -88,12 +74,8 @@ describe('Render errors', function () {
 	it('should handle errors for function declarations and invocations', async function () {
 		const renderer = renderErrors(sass);
 		const [actualAsync, actualSync] = await Promise.all([
-			renderer.render({
-				file: './test/fixtures/errors.function-declaration-invocation.scss'
-			}),
-			renderer.renderSync({
-				file: './test/fixtures/errors.function-declaration-invocation.scss'
-			})
+			renderer.compileAsync('./test/fixtures/errors.function-declaration-invocation.scss'),
+			renderer.compile('./test/fixtures/errors.function-declaration-invocation.scss')
 		]);
 		const expected = resolveExpectedResults([
 			{
@@ -124,12 +106,8 @@ describe('Render errors', function () {
 	it('should handle errors for function missing arguments', async function () {
 		const renderer = renderErrors(sass);
 		const [actualAsync, actualSync] = await Promise.all([
-			renderer.render({
-				file: './test/fixtures/errors.function-missing-arguments.scss'
-			}),
-			renderer.renderSync({
-				file: './test/fixtures/errors.function-missing-arguments.scss'
-			})
+			renderer.compileAsync('./test/fixtures/errors.function-missing-arguments.scss'),
+			renderer.compile('./test/fixtures/errors.function-missing-arguments.scss')
 		]);
 		const expected = resolveExpectedResults([
 			{
@@ -159,12 +137,8 @@ describe('Render errors', function () {
 	it('should handle partials', async function () {
 		const renderer = renderErrors(sass);
 		const [actualAsync, actualSync] = await Promise.all([
-			renderer.render({
-				file: './test/fixtures/_becky.scss'
-			}),
-			renderer.renderSync({
-				file: './test/fixtures/_becky.scss'
-			})
+			renderer.compileAsync('./test/fixtures/_becky.scss'),
+			renderer.compile('./test/fixtures/_becky.scss')
 		]);
 		const expected = resolveExpectedResults([
 			{
@@ -191,10 +165,10 @@ describe('Render errors', function () {
 	});
 
 	it('should handle errors from data string', async function () {
+		/** @type {StringTestCase[]} */
 		const testCases = [
 			{
-				input: { data: '@use "rocky";' },
-				/** @type {SassRenderError[]} */
+				input: '@use "rocky";',
 				output: [
 					{
 						file: 'stdin',
@@ -216,13 +190,11 @@ describe('Render errors', function () {
 				]
 			},
 			{
-				input: { data: 'body {color: color.invert(1);}' },
-				/** @type {SassRenderError[]} */
+				input: 'body {color: color.invert(1);}',
 				output: [
 					{
 						file: 'stdin',
-						message:
-							'There is no module with the namespace "color".',
+						message: 'There is no module with the namespace "color".',
 						stack: ['at root stylesheet (stdin:1:14)'],
 						source: {
 							end: {
@@ -245,8 +217,8 @@ describe('Render errors', function () {
 			testCases.map(async (testCase) => {
 				const renderer = renderErrors(sass);
 				const [actualAsync, actualSync] = await Promise.all([
-					renderer.render(testCase.input),
-					renderer.renderSync(testCase.input)
+					renderer.compileStringAsync(testCase.input),
+					renderer.compileString(testCase.input)
 				]);
 				const expected = resolveExpectedResults(testCase.output);
 				assert.deepEqual(actualAsync, expected);
@@ -258,13 +230,11 @@ describe('Render errors', function () {
 	it('should handle deprecations', async function () {
 		const renderer = renderErrors(sass);
 		const [actualAsync, actualSync] = await Promise.all([
-			renderer.render({
-				file: './test/fixtures/deprecations.scss',
-				includePaths: ['./test/fixtures/phoebe']
+			renderer.compileAsync('./test/fixtures/deprecations.scss', {
+				loadPaths: ['./test/fixtures/phoebe']
 			}),
-			renderer.renderSync({
-				file: './test/fixtures/deprecations.scss',
-				includePaths: ['./test/fixtures/phoebe']
+			renderer.compile('./test/fixtures/deprecations.scss', {
+				loadPaths: ['./test/fixtures/phoebe']
 			})
 		]);
 		const expected = resolveExpectedResults([
@@ -312,7 +282,7 @@ describe('Render errors', function () {
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
 				stack: [
-					'at @use (test/fixtures/phoebe/_tyson.scss:2:20)',
+					'at @use (_tyson.scss:2:20)',
 					'at root stylesheet (test/fixtures/deprecations.scss:3:1)'
 				]
 			},
@@ -326,9 +296,7 @@ describe('Render errors', function () {
 				message:
 					"As of Dart Sass 2.0.0, !global assignments won't be able to declare new variables. Since this assignment is at the root of the stylesheet, the !global flag is. Unnecessary and can safely be removed.",
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:7:1)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:7:1)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -340,9 +308,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:14:20)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:14:20)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -354,9 +320,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 3). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:15:20)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:15:20)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -368,9 +332,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 4). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:16:20)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:16:20)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -382,9 +344,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 5). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:17:20)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:17:20)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -396,9 +356,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 6). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:18:20)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:18:20)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -410,9 +368,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 7). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:19:19)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:19:19)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -424,9 +380,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 8). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:20:20)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:20:20)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -438,9 +392,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 9). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:21:20)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:21:20)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -452,9 +404,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 10). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:22:20)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:22:20)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -466,9 +416,7 @@ describe('Render errors', function () {
 				message:
 					'Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div($riley, 999) or calc($riley / 999). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:23:20)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:23:20)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -480,9 +428,7 @@ describe('Render errors', function () {
 				message:
 					'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:24:9)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:24:9)']
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
@@ -494,9 +440,7 @@ describe('Render errors', function () {
 				message:
 					'Passing a string to call() is deprecated and will be illegal in Dart Sass 2.0.0. Recommendation: call(get-function(willow)).',
 				type: 'deprecation',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.scss:25:9)'
-				]
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:25:9)']
 			}
 		]);
 		assert.deepEqual(actualAsync, expected);
@@ -508,20 +452,14 @@ describe('Undefined functions', function () {
 	it('should handle errors', async function () {
 		const renderer = undefinedFunctions(sass);
 		const [actualAsync, actualSync] = await Promise.all([
-			renderer.render({
-				file: './test/fixtures/errors.undefined-functions.scss'
-			}),
-			renderer.renderSync({
-				file: './test/fixtures/errors.undefined-functions.scss'
-			})
+			renderer.compileAsync('./test/fixtures/errors.undefined-functions.scss'),
+			renderer.compile('./test/fixtures/errors.undefined-functions.scss')
 		]);
 		const expected = resolveExpectedResults([
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: [
-					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:11:9)'
-				],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:11:9)'],
 				source: {
 					end: {
 						column: 14,
@@ -538,9 +476,7 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: [
-					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:13:16)'
-				],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:13:16)'],
 				source: {
 					end: {
 						column: 22,
@@ -557,9 +493,7 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: [
-					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:16:11)'
-				],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:16:11)'],
 				source: {
 					end: {
 						column: 17,
@@ -576,9 +510,7 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: [
-					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:18:10)'
-				],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:18:10)'],
 				source: {
 					end: {
 						column: 14,
@@ -595,9 +527,7 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: [
-					'at root stylesheet (test/fixtures/errors.undefined-functions.scss:20:19)'
-				],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:20:19)'],
 				source: {
 					end: {
 						column: 23,
@@ -618,31 +548,28 @@ describe('Undefined functions', function () {
 
 	it('should handle errors, disallowed known and additional unknown CSS functions', async function () {
 		const renderer = undefinedFunctions(sass, {
-			disallowedKnownCssFunctions: ['rem']
+			disallowedKnownCssFunctions: ['rotate']
 		});
 		const [actualAsync, actualSync] = await Promise.all([
-			renderer.render({
-				file: './test/fixtures/errors.undefined-functions.disallowed-functions.scss'
-			}),
-			renderer.renderSync({
-				file: './test/fixtures/errors.undefined-functions.disallowed-functions.scss'
-			})
+			// prettier-ignore
+			renderer.compileAsync('./test/fixtures/errors.undefined-functions.disallowed-functions.scss'),
+			renderer.compile('./test/fixtures/errors.undefined-functions.disallowed-functions.scss')
 		]);
 		const expected = resolveExpectedResults([
 			{
 				file: 'test/fixtures/errors.undefined-functions.disallowed-functions.scss',
 				message: 'Undefined function.',
 				stack: [
-					'at root stylesheet (test/fixtures/errors.undefined-functions.disallowed-functions.scss:2:14)'
+					'at root stylesheet (test/fixtures/errors.undefined-functions.disallowed-functions.scss:2:13)'
 				],
 				source: {
 					end: {
-						column: 17,
+						column: 19,
 						line: 2
 					},
-					pattern: 'rem',
+					pattern: 'rotate',
 					start: {
-						column: 14,
+						column: 13,
 						line: 2
 					}
 				},
@@ -674,32 +601,29 @@ describe('Undefined functions', function () {
 
 	it('should handle errors, disallowed known and allowed additional known CSS functions', async function () {
 		const renderer = undefinedFunctions(sass, {
-			disallowedKnownCssFunctions: ['rem'],
+			disallowedKnownCssFunctions: ['rotate'],
 			additionalKnownCssFunctions: ['v-bind']
 		});
 		const [actualAsync, actualSync] = await Promise.all([
-			renderer.render({
-				file: './test/fixtures/errors.undefined-functions.disallowed-functions.scss'
-			}),
-			renderer.renderSync({
-				file: './test/fixtures/errors.undefined-functions.disallowed-functions.scss'
-			})
+			// prettier-ignore
+			renderer.compileAsync('./test/fixtures/errors.undefined-functions.disallowed-functions.scss'),
+			renderer.compile('./test/fixtures/errors.undefined-functions.disallowed-functions.scss')
 		]);
 		const expected = resolveExpectedResults([
 			{
 				file: 'test/fixtures/errors.undefined-functions.disallowed-functions.scss',
 				message: 'Undefined function.',
 				stack: [
-					'at root stylesheet (test/fixtures/errors.undefined-functions.disallowed-functions.scss:2:14)'
+					'at root stylesheet (test/fixtures/errors.undefined-functions.disallowed-functions.scss:2:13)'
 				],
 				source: {
 					end: {
-						column: 17,
+						column: 19,
 						line: 2
 					},
-					pattern: 'rem',
+					pattern: 'rotate',
 					start: {
-						column: 14,
+						column: 13,
 						line: 2
 					}
 				},
@@ -711,10 +635,10 @@ describe('Undefined functions', function () {
 	});
 
 	it('should handle errors from data string', async function () {
+		/** @type {StringTestCase[]} */
 		const testCases = [
 			{
-				input: { data: 'body { color: becky(#f00); }' },
-				/** @type {SassRenderError[]} */
+				input: 'body { color: becky(#f00); }',
 				output: [
 					{
 						file: 'stdin',
@@ -741,8 +665,8 @@ describe('Undefined functions', function () {
 			testCases.map(async (testCase) => {
 				const renderer = undefinedFunctions(sass);
 				const [actualAsync, actualSync] = await Promise.all([
-					renderer.render(testCase.input),
-					renderer.renderSync(testCase.input)
+					renderer.compileStringAsync(testCase.input),
+					renderer.compileString(testCase.input)
 				]);
 				const expected = resolveExpectedResults(testCase.output);
 				assert.deepEqual(actualAsync, expected);
@@ -752,25 +676,23 @@ describe('Undefined functions', function () {
 	});
 
 	it('should handle errors from data string, disallowed known and additional unknown CSS functions', async function () {
+		/** @type {StringTestCase[]} */
 		const testCases = [
 			{
-				input: {
-					data: 'body { min-height: rem(10); height: v-bind(height); }'
-				},
-				/** @type {SassRenderError[]} */
+				input: 'body { transform: rotate(180deg); height: v-bind(height); }',
 				output: [
 					{
 						file: 'stdin',
 						message: 'Undefined function.',
-						stack: ['at root stylesheet (stdin:1:20)'],
+						stack: ['at root stylesheet (stdin:1:19)'],
 						source: {
 							end: {
-								column: 23,
+								column: 25,
 								line: 1
 							},
-							pattern: 'rem',
+							pattern: 'rotate',
 							start: {
-								column: 20,
+								column: 19,
 								line: 1
 							}
 						},
@@ -779,15 +701,15 @@ describe('Undefined functions', function () {
 					{
 						file: 'stdin',
 						message: 'Undefined function.',
-						stack: ['at root stylesheet (stdin:1:37)'],
+						stack: ['at root stylesheet (stdin:1:43)'],
 						source: {
 							end: {
-								column: 43,
+								column: 49,
 								line: 1
 							},
 							pattern: 'v-bind',
 							start: {
-								column: 37,
+								column: 43,
 								line: 1
 							}
 						},
@@ -800,11 +722,11 @@ describe('Undefined functions', function () {
 		await Promise.all(
 			testCases.map(async (testCase) => {
 				const renderer = undefinedFunctions(sass, {
-					disallowedKnownCssFunctions: ['rem']
+					disallowedKnownCssFunctions: ['rotate']
 				});
 				const [actualAsync, actualSync] = await Promise.all([
-					renderer.render(testCase.input),
-					renderer.renderSync(testCase.input)
+					renderer.compileStringAsync(testCase.input),
+					renderer.compileString(testCase.input)
 				]);
 				const expected = resolveExpectedResults(testCase.output);
 				assert.deepEqual(actualAsync, expected);
@@ -814,25 +736,23 @@ describe('Undefined functions', function () {
 	});
 
 	it('should handle errors from data string, disallowed known and allowed additional known CSS functions', async function () {
+		/** @type {StringTestCase[]} */
 		const testCases = [
 			{
-				input: {
-					data: 'body { min-height: rem(10); height: v-bind(height); }'
-				},
-				/** @type {SassRenderError[]} */
+				input: 'body { transform: rotate(180deg); height: v-bind(height); }',
 				output: [
 					{
 						file: 'stdin',
 						message: 'Undefined function.',
-						stack: ['at root stylesheet (stdin:1:20)'],
+						stack: ['at root stylesheet (stdin:1:19)'],
 						source: {
 							end: {
-								column: 23,
+								column: 25,
 								line: 1
 							},
-							pattern: 'rem',
+							pattern: 'rotate',
 							start: {
-								column: 20,
+								column: 19,
 								line: 1
 							}
 						},
@@ -845,12 +765,12 @@ describe('Undefined functions', function () {
 		await Promise.all(
 			testCases.map(async (testCase) => {
 				const renderer = undefinedFunctions(sass, {
-					disallowedKnownCssFunctions: ['rem'],
+					disallowedKnownCssFunctions: ['rotate'],
 					additionalKnownCssFunctions: ['v-bind']
 				});
 				const [actualAsync, actualSync] = await Promise.all([
-					renderer.render(testCase.input),
-					renderer.renderSync(testCase.input)
+					renderer.compileStringAsync(testCase.input),
+					renderer.compileString(testCase.input)
 				]);
 				const expected = resolveExpectedResults(testCase.output);
 				assert.deepEqual(actualAsync, expected);
@@ -865,28 +785,18 @@ describe('All implementations', function () {
 		const rendererErrors = renderErrors(sass);
 		const rendererUndefinedFunctions = undefinedFunctions(sass);
 		const actualAsync = await Promise.all([
-			rendererUndefinedFunctions.render({
-				file: './test/fixtures/deprecations.all.scss'
-			}),
-			rendererErrors.render({
-				file: './test/fixtures/deprecations.all.scss'
-			})
+			rendererUndefinedFunctions.compileAsync('./test/fixtures/deprecations.all.scss'),
+			rendererErrors.compileAsync('./test/fixtures/deprecations.all.scss')
 		]);
 		const actualSync = await Promise.all([
-			rendererUndefinedFunctions.renderSync({
-				file: './test/fixtures/deprecations.all.scss'
-			}),
-			rendererErrors.renderSync({
-				file: './test/fixtures/deprecations.all.scss'
-			})
+			rendererUndefinedFunctions.compile('./test/fixtures/deprecations.all.scss'),
+			rendererErrors.compile('./test/fixtures/deprecations.all.scss')
 		]);
 		const expected = resolveExpectedResults([
 			{
 				file: 'test/fixtures/deprecations.all.scss',
 				message: 'Undefined function.',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.all.scss:9:9)'
-				],
+				stack: ['at root stylesheet (test/fixtures/deprecations.all.scss:9:9)'],
 				source: {
 					end: {
 						column: 14,
@@ -903,9 +813,7 @@ describe('All implementations', function () {
 			{
 				file: 'test/fixtures/deprecations.all.scss',
 				message: 'Undefined function.',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.all.scss:14:11)'
-				],
+				stack: ['at root stylesheet (test/fixtures/deprecations.all.scss:14:11)'],
 				source: {
 					end: {
 						column: 17,
@@ -923,9 +831,7 @@ describe('All implementations', function () {
 				file: 'test/fixtures/deprecations.all.scss',
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				stack: [
-					'at root stylesheet (test/fixtures/deprecations.all.scss:12:24)'
-				],
+				stack: ['at root stylesheet (test/fixtures/deprecations.all.scss:12:24)'],
 				source: {
 					end: {
 						column: 31,
@@ -941,22 +847,15 @@ describe('All implementations', function () {
 			}
 		]);
 
-		/** @type {SassRenderError[]} */
-		const asyncResults = [];
-		/** @type {SassRenderError[]} */
-		const syncResults = [];
-
-		assert.deepEqual(asyncResults.concat(...actualAsync), expected);
-		assert.deepEqual(syncResults.concat(...actualSync), expected);
+		assert.deepEqual(actualAsync.flat(), expected);
+		assert.deepEqual(actualSync.flat(), expected);
 	});
 
 	it('should handle errors from data string', async function () {
+		/** @type {StringTestCase[]} */
 		const testCases = [
 			{
-				input: {
-					data: 'body { color: becky(#f00); min-width: percentage(100 / 2); }'
-				},
-				/** @type {SassRenderError[]} */
+				input: 'body { color: becky(#f00); min-width: percentage(100 / 2); }',
 				output: [
 					{
 						file: 'stdin',
@@ -1002,22 +901,17 @@ describe('All implementations', function () {
 				const rendererErrors = renderErrors(sass);
 				const rendererUndefinedFunctions = undefinedFunctions(sass);
 				const actualAsync = await Promise.all([
-					rendererUndefinedFunctions.render(testCase.input),
-					rendererErrors.render(testCase.input)
+					rendererUndefinedFunctions.compileStringAsync(testCase.input),
+					rendererErrors.compileStringAsync(testCase.input)
 				]);
 				const actualSync = await Promise.all([
-					rendererUndefinedFunctions.renderSync(testCase.input),
-					rendererErrors.renderSync(testCase.input)
+					rendererUndefinedFunctions.compileString(testCase.input),
+					rendererErrors.compileString(testCase.input)
 				]);
 				const expected = resolveExpectedResults(testCase.output);
 
-				/** @type {SassRenderError[]} */
-				const asyncResults = [];
-				/** @type {SassRenderError[]} */
-				const syncResults = [];
-
-				assert.deepEqual(asyncResults.concat(...actualAsync), expected);
-				assert.deepEqual(syncResults.concat(...actualSync), expected);
+				assert.deepEqual(actualAsync.flat(), expected);
+				assert.deepEqual(actualSync.flat(), expected);
 			})
 		);
 	});

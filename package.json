@@ -39,7 +39,7 @@
   "dependencies": {
     "css-functions-list": "^3.2.1",
     "nanoid": "^5.0.7",
-    "node-sass-json-functions": "^3.3.0",
+    "node-sass-json-functions": "^4.1.0",
     "p-memoize": "^7.1.1",
     "postcss": "^8.3.11",
     "postcss-scss": "^4.0.1",
@@ -65,12 +65,12 @@
     "np": "^10.0.2",
     "nyc": "^15.1.0",
     "prettier": "^3.2.5",
-    "sass": "1.64.2",
+    "sass": "^1.75.0",
     "typescript": "^5.4.3",
     "version-changelog": "^3.1.1"
   },
   "peerDependencies": {
-    "sass": "<=1.64.2"
+    "sass": ">=1.75.0"
   },
   "engines": {
     "node": ">=18"
