@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [2.0.0][] - 2024-04-18
+
 ### Changed
 
 -   Use [new Sass API](https://sass-lang.com/documentation/js-api/)
@@ -168,47 +170,28 @@
 
 -   Initial implementation
 
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/niksy/sass-render-errors/tree/v1.0.0
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.1.0...HEAD
 [1.1.0]: https://github.com/niksy/sass-render-errors/tree/v1.1.0
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.1.1...HEAD
 [1.1.1]: https://github.com/niksy/sass-render-errors/tree/v1.1.1
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.1.2...HEAD
 [1.1.2]: https://github.com/niksy/sass-render-errors/tree/v1.1.2
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.1.3...HEAD
 [1.1.3]: https://github.com/niksy/sass-render-errors/tree/v1.1.3
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.2.0...HEAD
 [1.2.0]: https://github.com/niksy/sass-render-errors/tree/v1.2.0
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.3.0...HEAD
 [1.3.0]: https://github.com/niksy/sass-render-errors/tree/v1.3.0
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.0...HEAD
 [1.4.0]: https://github.com/niksy/sass-render-errors/tree/v1.4.0
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.1...HEAD
 [1.4.1]: https://github.com/niksy/sass-render-errors/tree/v1.4.1
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.2...HEAD
 [1.4.2]: https://github.com/niksy/sass-render-errors/tree/v1.4.2
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.4.3...HEAD
 [1.4.3]: https://github.com/niksy/sass-render-errors/tree/v1.4.3
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.5.0...HEAD
 [1.5.0]: https://github.com/niksy/sass-render-errors/tree/v1.5.0
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.5.1...HEAD
 [1.5.1]: https://github.com/niksy/sass-render-errors/tree/v1.5.1
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.5.2...HEAD
 [1.5.2]: https://github.com/niksy/sass-render-errors/tree/v1.5.2
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.6.0...HEAD
 [1.6.0]: https://github.com/niksy/sass-render-errors/tree/v1.6.0
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.6.1...HEAD
 [1.6.1]: https://github.com/niksy/sass-render-errors/tree/v1.6.1
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.7.0...HEAD
 [1.7.0]: https://github.com/niksy/sass-render-errors/tree/v1.7.0
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.7.1...HEAD
 [1.7.1]: https://github.com/niksy/sass-render-errors/tree/v1.7.1
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.7.2...HEAD
 [1.7.2]: https://github.com/niksy/sass-render-errors/tree/v1.7.2
-[unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.8.0...HEAD
 [1.8.0]: https://github.com/niksy/sass-render-errors/tree/v1.8.0
-[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v1.9.0...HEAD
+[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/niksy/sass-render-errors/compare/v1.9.0...v2.0.0
 [1.9.0]: https://github.com/niksy/sass-render-errors/compare/v1.8.3...v1.9.0
 [1.8.3]: https://github.com/niksy/sass-render-errors/compare/v1.8.2...v1.8.3
 [1.8.2]: https://github.com/niksy/sass-render-errors/compare/v1.8.1...v1.8.2
