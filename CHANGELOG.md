@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [2.0.2][] - 2024-04-18
+
 ### Changed
 
 -   Expose types for render errors and undefined functions
@@ -205,5 +207,6 @@
 [1.8.3]: https://github.com/niksy/sass-render-errors/compare/v1.8.2...v1.8.3
 [1.8.2]: https://github.com/niksy/sass-render-errors/compare/v1.8.1...v1.8.2
 [1.8.1]: https://github.com/niksy/sass-render-errors/tree/v1.8.1
-[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/niksy/sass-render-errors/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/niksy/sass-render-errors/compare/v2.0.0...v2.0.1
