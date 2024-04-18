@@ -10,6 +10,12 @@
       "import": "./index.js",
       "types": "./types/index.d.ts"
     },
+    "./types/render-errors": {
+      "types": "./types/lib/render-errors.d.ts"
+    },
+    "./types/undefined-functions": {
+      "types": "./types/lib/undefined-functions.d.ts"
+    },
     "./package.json": "./package.json"
   },
   "main": "index.js",

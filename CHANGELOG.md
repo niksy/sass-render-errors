@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Expose types for render errors and undefined functions
+
 ## [2.0.1][] - 2024-04-18
 
 ### Fixed
