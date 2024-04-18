@@ -2,6 +2,17 @@
 
 ## [Unreleased][]
 
+### Changed
+
+-   Use [new Sass API](https://sass-lang.com/documentation/js-api/)
+-   Use new logger JS API for simpler deprecation parsing
+
+### Removed
+
+-   CommonJS support, only ESM is supported
+-   Node 10 support, lowest version is 18
+-   Legacy Sass support, lowest version is 1.75
+
 ## [1.9.0][] - 2023-09-25
 
 ### Added
