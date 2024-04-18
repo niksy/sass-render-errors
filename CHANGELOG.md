@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Add types to package
+
 ## [2.0.0][] - 2024-04-18
 
 ### Changed
@@ -190,9 +194,9 @@
 [1.7.1]: https://github.com/niksy/sass-render-errors/tree/v1.7.1
 [1.7.2]: https://github.com/niksy/sass-render-errors/tree/v1.7.2
 [1.8.0]: https://github.com/niksy/sass-render-errors/tree/v1.8.0
-[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v2.0.0...HEAD
 [2.0.0]: https://github.com/niksy/sass-render-errors/compare/v1.9.0...v2.0.0
 [1.9.0]: https://github.com/niksy/sass-render-errors/compare/v1.8.3...v1.9.0
 [1.8.3]: https://github.com/niksy/sass-render-errors/compare/v1.8.2...v1.8.3
 [1.8.2]: https://github.com/niksy/sass-render-errors/compare/v1.8.1...v1.8.2
 [1.8.1]: https://github.com/niksy/sass-render-errors/tree/v1.8.1
+[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v2.0.0...HEAD
