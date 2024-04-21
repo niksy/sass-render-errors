@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+-   Update types referencing
+
 ## [2.0.2][] - 2024-04-18
 
 ### Changed
