@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Fixed
+
+-   Pass entry point URL as starting point for relative imports
+
 ## [2.0.3][] - 2024-04-21
 
 -   Update types referencing

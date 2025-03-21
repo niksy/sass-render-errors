@@ -459,16 +459,16 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:11:9)'],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:12:9)'],
 				source: {
 					end: {
 						column: 14,
-						line: 11
+						line: 12
 					},
 					pattern: 'becky',
 					start: {
 						column: 9,
-						line: 11
+						line: 12
 					}
 				},
 				type: 'error'
@@ -476,16 +476,16 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:13:16)'],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:14:16)'],
 				source: {
 					end: {
 						column: 22,
-						line: 13
+						line: 14
 					},
 					pattern: 'harley',
 					start: {
 						column: 16,
-						line: 13
+						line: 14
 					}
 				},
 				type: 'error'
@@ -493,16 +493,16 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:16:11)'],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:17:11)'],
 				source: {
 					end: {
 						column: 17,
-						line: 16
+						line: 17
 					},
 					pattern: 'harley',
 					start: {
 						column: 11,
-						line: 16
+						line: 17
 					}
 				},
 				type: 'error'
@@ -510,16 +510,16 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:18:10)'],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:19:10)'],
 				source: {
 					end: {
 						column: 14,
-						line: 18
+						line: 19
 					},
 					pattern: 'oreo',
 					start: {
 						column: 10,
-						line: 18
+						line: 19
 					}
 				},
 				type: 'error'
@@ -527,16 +527,16 @@ describe('Undefined functions', function () {
 			{
 				file: 'test/fixtures/errors.undefined-functions.scss',
 				message: 'Undefined function.',
-				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:20:19)'],
+				stack: ['at root stylesheet (test/fixtures/errors.undefined-functions.scss:21:19)'],
 				source: {
 					end: {
 						column: 23,
-						line: 20
+						line: 21
 					},
 					pattern: 'kona',
 					start: {
 						column: 19,
-						line: 20
+						line: 21
 					}
 				},
 				type: 'error'
