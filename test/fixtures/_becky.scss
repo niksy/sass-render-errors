@@ -1,5 +1,8 @@
+@use 'phoebe/functions' as *;
 @use 'sass:math';
 
 body {
 	color: math.percentage(23 / 43);
+	display: dexter(none);
+	@include brutus;
 }

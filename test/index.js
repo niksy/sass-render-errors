@@ -145,16 +145,16 @@ describe('Render errors', function () {
 				file: 'test/fixtures/_becky.scss',
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				stack: ['at root stylesheet (test/fixtures/_becky.scss:4:25)'],
+				stack: ['at root stylesheet (test/fixtures/_becky.scss:5:25)'],
 				source: {
 					end: {
 						column: 32,
-						line: 4
+						line: 5
 					},
 					pattern: '23 / 43',
 					start: {
 						column: 25,
-						line: 4
+						line: 5
 					}
 				},
 				type: 'deprecation'
@@ -261,12 +261,12 @@ describe('Render errors', function () {
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				stack: [
-					'at @use (test/fixtures/_becky.scss:4:25)',
+					'at @use (test/fixtures/_becky.scss:5:25)',
 					'at root stylesheet (test/fixtures/deprecations.scss:2:1)'
 				],
 				source: {
-					start: { line: 4, column: 25 },
-					end: { line: 4, column: 32 },
+					start: { line: 5, column: 25 },
+					end: { line: 5, column: 32 },
 					pattern: '23 / 43'
 				},
 				type: 'deprecation'

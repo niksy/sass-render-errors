@@ -21,4 +21,5 @@ body {
 	outline-color: #{kona(2)};
 	transform: rotate(180deg);
 	display: dexter(none);
+	@include brutus;
 }
