@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [2.0.4][] - 2025-03-21
+
 ### Fixed
 
 -   Pass entry point URL as starting point for relative imports
@@ -215,7 +217,8 @@
 [1.8.3]: https://github.com/niksy/sass-render-errors/compare/v1.8.2...v1.8.3
 [1.8.2]: https://github.com/niksy/sass-render-errors/compare/v1.8.1...v1.8.2
 [1.8.1]: https://github.com/niksy/sass-render-errors/tree/v1.8.1
-[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v2.0.3...HEAD
+[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v2.0.4...HEAD
+[2.0.4]: https://github.com/niksy/sass-render-errors/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/niksy/sass-render-errors/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/niksy/sass-render-errors/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/niksy/sass-render-errors/compare/v2.0.0...v2.0.1
