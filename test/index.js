@@ -46,7 +46,7 @@ describe('Render errors', function () {
 					},
 					pattern: '@elseif'
 				},
-				stack: [],
+				stack: ['at root stylesheet (test/fixtures/errors.stylesheet-import.scss:27:4)'],
 				type: 'deprecation'
 			},
 			{
@@ -145,16 +145,16 @@ describe('Render errors', function () {
 				file: 'test/fixtures/_becky.scss',
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				stack: ['at root stylesheet (test/fixtures/_becky.scss:2:20)'],
+				stack: ['at root stylesheet (test/fixtures/_becky.scss:4:25)'],
 				source: {
 					end: {
-						column: 27,
-						line: 2
+						column: 32,
+						line: 4
 					},
 					pattern: '23 / 43',
 					start: {
-						column: 20,
-						line: 2
+						column: 25,
+						line: 4
 					}
 				},
 				type: 'deprecation'
@@ -242,6 +242,7 @@ describe('Render errors', function () {
 				file: 'test/fixtures/deprecations.scss',
 				message:
 					'@elseif is deprecated and will not be supported in future Sass versions. Recommendation: @else if.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:28:4)'],
 				source: {
 					start: {
 						column: 4,
@@ -253,194 +254,340 @@ describe('Render errors', function () {
 					},
 					pattern: '@elseif'
 				},
-				stack: [],
 				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/_becky.scss',
-				source: {
-					start: { line: 2, column: 20 },
-					end: { line: 2, column: 27 },
-					pattern: '23 / 43'
-				},
 				message:
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
 				stack: [
-					'at @use (test/fixtures/_becky.scss:2:20)',
+					'at @use (test/fixtures/_becky.scss:4:25)',
 					'at root stylesheet (test/fixtures/deprecations.scss:2:1)'
-				]
+				],
+				source: {
+					start: { line: 4, column: 25 },
+					end: { line: 4, column: 32 },
+					pattern: '23 / 43'
+				},
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/phoebe/_tyson.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: [
+					'at @use (_tyson.scss:2:20)',
+					'at root stylesheet (test/fixtures/deprecations.scss:3:1)'
+				],
 				source: {
 					start: { line: 2, column: 20 },
 					end: { line: 2, column: 27 },
 					pattern: '23 / 43'
 				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/phoebe/_tyson.scss',
 				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(23, 43). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
 				stack: [
-					'at @use (_tyson.scss:2:20)',
+					'at @use (_tyson.scss:2:9)',
 					'at root stylesheet (test/fixtures/deprecations.scss:3:1)'
-				]
+				],
+				source: {
+					start: { line: 2, column: 9 },
+					end: { line: 2, column: 28 },
+					pattern: 'percentage(23 / 43)'
+				},
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					"As of Dart Sass 2.0.0, !global assignments won't be able to declare new variables. Since this assignment is at the root of the stylesheet, the !global flag is. Unnecessary and can safely be removed.",
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:7:1)'],
 				source: {
 					start: { line: 7, column: 1 },
 					end: { line: 7, column: 24 },
 					pattern: '$benny: winston !global'
 				},
-				message:
-					"As of Dart Sass 2.0.0, !global assignments won't be able to declare new variables. Since this assignment is at the root of the stylesheet, the !global flag is. Unnecessary and can safely be removed.",
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:7:1)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:14:20)'],
 				source: {
 					start: { line: 14, column: 20 },
 					end: { line: 14, column: 25 },
 					pattern: '1 / 2'
 				},
-				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:14:20)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:14:9)'],
+				source: {
+					start: { line: 14, column: 9 },
+					end: { line: 14, column: 26 },
+					pattern: 'percentage(1 / 2)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 3). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:15:20)'],
 				source: {
 					start: { line: 15, column: 20 },
 					end: { line: 15, column: 25 },
 					pattern: '1 / 3'
 				},
-				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 3). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:15:20)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:15:9)'],
+				source: {
+					start: { line: 15, column: 9 },
+					end: { line: 15, column: 26 },
+					pattern: 'percentage(1 / 3)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 4). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:16:20)'],
 				source: {
 					start: { line: 16, column: 20 },
 					end: { line: 16, column: 25 },
 					pattern: '1 / 4'
 				},
-				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 4). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:16:20)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:16:9)'],
+				source: {
+					start: { line: 16, column: 9 },
+					end: { line: 16, column: 26 },
+					pattern: 'percentage(1 / 4)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 5). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:17:20)'],
 				source: {
 					start: { line: 17, column: 20 },
 					end: { line: 17, column: 25 },
 					pattern: '1 / 5'
 				},
-				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 5). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:17:20)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:17:9)'],
+				source: {
+					start: { line: 17, column: 9 },
+					end: { line: 17, column: 26 },
+					pattern: 'percentage(1 / 5)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 6). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:18:20)'],
 				source: {
 					start: { line: 18, column: 20 },
 					end: { line: 18, column: 25 },
 					pattern: '1 / 6'
 				},
-				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 6). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:18:20)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:18:9)'],
+				source: {
+					start: { line: 18, column: 9 },
+					end: { line: 18, column: 26 },
+					pattern: 'percentage(1 / 6)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 7). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:19:19)'],
 				source: {
 					start: { line: 19, column: 19 },
 					end: { line: 19, column: 24 },
 					pattern: '1 / 7'
 				},
-				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 7). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:19:19)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:19:8)'],
+				source: {
+					start: { line: 19, column: 8 },
+					end: { line: 19, column: 25 },
+					pattern: 'percentage(1 / 7)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 8). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:20:20)'],
 				source: {
 					start: { line: 20, column: 20 },
 					end: { line: 20, column: 25 },
 					pattern: '1 / 8'
 				},
-				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 8). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:20:20)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:20:9)'],
+				source: {
+					start: { line: 20, column: 9 },
+					end: { line: 20, column: 26 },
+					pattern: 'percentage(1 / 8)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 9). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:21:20)'],
 				source: {
 					start: { line: 21, column: 20 },
 					end: { line: 21, column: 25 },
 					pattern: '1 / 9'
 				},
-				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 9). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:21:20)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:21:9)'],
+				source: {
+					start: { line: 21, column: 9 },
+					end: { line: 21, column: 26 },
+					pattern: 'percentage(1 / 9)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 10). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:22:20)'],
 				source: {
 					start: { line: 22, column: 20 },
 					end: { line: 22, column: 26 },
 					pattern: '1 / 10'
 				},
-				message:
-					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(1, 10). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:22:20)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:22:9)'],
+				source: {
+					start: { line: 22, column: 9 },
+					end: { line: 22, column: 27 },
+					pattern: 'percentage(1 / 10)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div($riley, 999) or calc($riley / 999). More info and automated migrator: https://sass-lang.com/d/slash-div.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:23:20)'],
 				source: {
 					start: { line: 23, column: 20 },
 					end: { line: 23, column: 32 },
 					pattern: '$riley / 999'
 				},
-				message:
-					'Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div($riley, 999) or calc($riley / 999). More info and automated migrator: https://sass-lang.com/d/slash-div.',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:23:20)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:23:9)'],
+				source: {
+					start: { line: 23, column: 9 },
+					end: { line: 23, column: 33 },
+					pattern: 'percentage($riley / 999)'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:24:9)'],
 				source: {
 					start: { line: 24, column: 9 },
 					end: { line: 24, column: 24 },
 					pattern: 'color.invert(1)'
 				},
-				message:
-					'Passing a number (1) to color.invert() is deprecated. Recommendation: invert(1).',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:24:9)']
+				type: 'deprecation'
 			},
 			{
 				file: 'test/fixtures/deprecations.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use meta.call instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:25:9)'],
 				source: {
 					start: { line: 25, column: 9 },
 					end: { line: 25, column: 21 },
 					pattern: 'call(willow)'
 				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.scss',
 				message:
 					'Passing a string to call() is deprecated and will be illegal in Dart Sass 2.0.0. Recommendation: call(get-function(willow)).',
-				type: 'deprecation',
-				stack: ['at root stylesheet (test/fixtures/deprecations.scss:25:9)']
+				stack: ['at root stylesheet (test/fixtures/deprecations.scss:25:9)'],
+				source: {
+					start: { line: 25, column: 9 },
+					end: { line: 25, column: 21 },
+					pattern: 'call(willow)'
+				},
+				type: 'deprecation'
 			}
 		]);
 		assert.deepEqual(actualAsync, expected);
@@ -798,15 +945,15 @@ describe('All implementations', function () {
 				message: 'Undefined function.',
 				stack: ['at root stylesheet (test/fixtures/deprecations.all.scss:9:9)'],
 				source: {
+					start: {
+						column: 9,
+						line: 9
+					},
 					end: {
 						column: 14,
 						line: 9
 					},
-					pattern: 'becky',
-					start: {
-						column: 9,
-						line: 9
-					}
+					pattern: 'becky'
 				},
 				type: 'error'
 			},
@@ -815,15 +962,15 @@ describe('All implementations', function () {
 				message: 'Undefined function.',
 				stack: ['at root stylesheet (test/fixtures/deprecations.all.scss:14:11)'],
 				source: {
+					start: {
+						column: 11,
+						line: 14
+					},
 					end: {
 						column: 17,
 						line: 14
 					},
-					pattern: 'harley',
-					start: {
-						column: 11,
-						line: 14
-					}
+					pattern: 'harley'
 				},
 				type: 'error'
 			},
@@ -833,15 +980,33 @@ describe('All implementations', function () {
 					'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 				stack: ['at root stylesheet (test/fixtures/deprecations.all.scss:12:24)'],
 				source: {
+					start: {
+						column: 24,
+						line: 12
+					},
 					end: {
 						column: 31,
 						line: 12
 					},
-					pattern: '100 / 2',
+					pattern: '100 / 2'
+				},
+				type: 'deprecation'
+			},
+			{
+				file: 'test/fixtures/deprecations.all.scss',
+				message:
+					'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+				stack: ['at root stylesheet (test/fixtures/deprecations.all.scss:12:13)'],
+				source: {
 					start: {
-						column: 24,
+						column: 13,
 						line: 12
-					}
+					},
+					end: {
+						column: 32,
+						line: 12
+					},
+					pattern: 'percentage(100 / 2)'
 				},
 				type: 'deprecation'
 			}
@@ -862,15 +1027,9 @@ describe('All implementations', function () {
 						message: 'Undefined function.',
 						stack: ['at root stylesheet (stdin:1:15)'],
 						source: {
-							end: {
-								column: 20,
-								line: 1
-							},
-							pattern: 'becky',
-							start: {
-								column: 15,
-								line: 1
-							}
+							start: { line: 1, column: 15 },
+							end: { line: 1, column: 20 },
+							pattern: 'becky'
 						},
 						type: 'error'
 					},
@@ -880,15 +1039,21 @@ describe('All implementations', function () {
 							'Using / for division is deprecated and will be removed in Dart Sass 2.0.0. Recommendation: math.div(100, 2). More info and automated migrator: https://sass-lang.com/d/slash-div.',
 						stack: ['at root stylesheet (stdin:1:50)'],
 						source: {
-							end: {
-								column: 57,
-								line: 1
-							},
-							pattern: '100 / 2',
-							start: {
-								column: 50,
-								line: 1
-							}
+							start: { line: 1, column: 50 },
+							end: { line: 1, column: 57 },
+							pattern: '100 / 2'
+						},
+						type: 'deprecation'
+					},
+					{
+						file: 'stdin',
+						message:
+							'Global built-in functions are deprecated and will be removed in Dart Sass 3.0.0. Use math.percentage instead. More info and automated migrator: https://sass-lang.com/d/import.',
+						stack: ['at root stylesheet (stdin:1:39)'],
+						source: {
+							start: { line: 1, column: 39 },
+							end: { line: 1, column: 58 },
+							pattern: 'percentage(100 / 2)'
 						},
 						type: 'deprecation'
 					}

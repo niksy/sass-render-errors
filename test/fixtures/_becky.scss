@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 body {
-	color: percentage(23 / 43);
+	color: math.percentage(23 / 43);
 }
