@@ -2,6 +2,10 @@
 
 ## [Unreleased][]
 
+### Changed
+
+- Add support for `sass-embedded`
+
 ## [2.0.5][] - 2025-03-21
 
 ### Changed
