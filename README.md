@@ -24,11 +24,14 @@ This renderer is available as named export `undefinedFunctions`.
 npm install sass-render-errors --save
 ```
 
+`sass` and `sass-embedded` are optional peer dependencies so you need to install either of them
+separately.
+
 ## Usage
 
 ```js
+import * as sass from 'sass'; // or `sass-embedded`
 import createRenderer from 'sass-render-errors';
-import sass from 'sass';
 
 (async () => {
 	const renderer = createRenderer(sass);
@@ -77,7 +80,7 @@ compile methods.
 
 #### sass
 
-[Sass][dart-sass] module reference. _Only Dart Sass is supported._
+[Sass][dart-sass] module reference. _Only Dart Sass is supported_ (`sass` or `sass-embedded`).
 
 Sass is injected as dependancy because each version has different set of errors and deprecations and
 you should get results for Sass version your application uses.
