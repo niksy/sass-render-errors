@@ -1,10 +1,10 @@
 {
 	"compilerOptions": {
-		"module": "node16",
-		"moduleResolution": "node16",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"moduleDetection": "force",
-		"target": "ES2022",
-		"lib": ["ES2022"],
+		"target": "es2022",
+		"lib": ["ES2023"],
 		"resolveJsonModule": false,
 		"newLine": "lf",
 		"strict": true,
@@ -19,7 +19,11 @@
 		"skipLibCheck": true,
 		"allowJs": true,
 		"checkJs": true,
-		"isolatedModules": true
+		"isolatedModules": true,
+		"verbatimModuleSyntax": true,
+		"allowImportingTsExtensions": true,
+		"rewriteRelativeImportExtensions": true,
+		"erasableSyntaxOnly": true
 	},
-	"include": ["index.js", "lib/**/*.js", "test/**/*.js"]
+	"include": ["*.{js,cjs}", "lib", "test"]
 }
