@@ -198,6 +198,8 @@
 
 - Initial implementation
 
+<!-- prettier-ignore-start -->
+
 [1.0.0]: https://github.com/niksy/sass-render-errors/tree/v1.0.0
 [1.1.0]: https://github.com/niksy/sass-render-errors/tree/v1.1.0
 [1.1.1]: https://github.com/niksy/sass-render-errors/tree/v1.1.1
