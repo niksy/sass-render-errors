@@ -5,6 +5,7 @@
 ### Changed
 
 - Add support for `sass-embedded`
+- **Breaking**: Sass module (either `sass` or `sass-embedded`) is optional peer dependancy
 
 ## [2.0.5][] - 2025-03-21
 
