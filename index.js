@@ -1,3 +1,7 @@
+/**
+ * @typedef {import('./lib/types.ts').SassRenderError} SassRenderError
+ */
+
 import renderErrors from './lib/render-errors.js';
 import undefinedFunctions from './lib/undefined-functions.js';
 
