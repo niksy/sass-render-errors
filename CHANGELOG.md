@@ -2,6 +2,8 @@
 
 ## [Unreleased][]
 
+## [3.0.0][] - 2026-02-16
+
 ### Changed
 
 - Add support for `sass-embedded`
@@ -230,7 +232,8 @@
 [1.8.3]: https://github.com/niksy/sass-render-errors/compare/v1.8.2...v1.8.3
 [1.8.2]: https://github.com/niksy/sass-render-errors/compare/v1.8.1...v1.8.2
 [1.8.1]: https://github.com/niksy/sass-render-errors/tree/v1.8.1
-[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v2.0.5...HEAD
+[Unreleased]: https://github.com/niksy/sass-render-errors/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/niksy/sass-render-errors/compare/v2.0.5...v3.0.0
 [2.0.5]: https://github.com/niksy/sass-render-errors/compare/v2.0.4...v2.0.5
 [2.0.4]: https://github.com/niksy/sass-render-errors/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/niksy/sass-render-errors/compare/v2.0.2...v2.0.3
